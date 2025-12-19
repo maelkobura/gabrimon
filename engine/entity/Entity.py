@@ -1,9 +1,20 @@
-﻿from engine.services.Service import Service
+﻿from engine.entity.Component import Component
+from engine.services.Service import Service
 
 
 class Entity:
     def __init__(self, service: Service):
         self.service = service
+        self.components = {}
+
+    def register_component(self, name, component):
+        c = component(self)
+        c.init()
+        self.components[name] = c
+        return c
+
+    def get_component(self, name):
+        return self.components[name]
 
     def start(self):
         pass

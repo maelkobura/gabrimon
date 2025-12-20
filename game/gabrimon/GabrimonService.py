@@ -16,15 +16,3 @@ class GabrimonService(Service):
 
 
 
-
-
-
-
-
-gabrimon= {
-    Flamino : "feu" , "brasier vit" , "20 pv" ,"60",
-    Herbifang: "plante", "Photosynthèse" , "21" , "58",
-        }
-
-
-

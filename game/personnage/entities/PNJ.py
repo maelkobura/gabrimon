@@ -1,4 +1,4 @@
-from game.personnage.Personnage import Personnage
+from game.personnage.entities.Personnage import Personnage
 
 
 class PNJ(Personnage):

@@ -1,9 +1,11 @@
 from engine.services.HostService import HostService
-from game.personnage.Joueur import Joueur
-from game.personnage.PNJ import PNJ
+from game.personnage.entities.Joueur import Joueur
+from game.personnage.entities.PNJ import PNJ
 
 
 class PersonnageService(HostService):
     def init(self):
+
+        self.engine.load("assets/personnages.pyxres")
+
         self.add_child(Joueur(self))
-        self.add_child(PNJ(self))

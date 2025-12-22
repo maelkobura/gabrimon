@@ -47,8 +47,11 @@ class Engine:
         if not self.started:
             self.init_game()
 
-
-        for service in self.services.values():
+        sorted_services = sorted(
+            self.services.values(),
+            key=lambda obj: getattr(obj.update, 'priority', float('inf'))
+        )
+        for service in sorted_services:
             service.update()
 
     def draw(self):
@@ -61,7 +64,11 @@ class Engine:
             pyxel.blt(x, y, 0, 0, 0, w, h)
         else:
             pyxel.cls(0)
-            for service in self.services.values():
+            sorted_services = sorted(
+                self.services.values(),
+                key=lambda obj: getattr(obj.draw, 'priority', float('inf'))
+            )
+            for service in sorted_services:
                 service.draw()
 
     def init_game(self):

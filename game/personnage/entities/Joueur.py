@@ -7,8 +7,10 @@ from game.personnage.entities.Personnage import Personnage
 class Joueur(Personnage):
     def __init__(self, service):
         super().__init__(service)
-        self.speed = 5
+        self.speed = 2
         self.register_component("mouvement", MouvementComponent)
+        self.x = 120
+        self.y = 110
 
     def update(self):
         dx, dy = 0, 0
@@ -24,9 +26,7 @@ class Joueur(Personnage):
         self.get_component("mouvement").move(dx, dy)
         super().update()
 
-    def draw(self):
-        camera_x = self.set_state("camera_x", self.x - pyxel.width // 2)
-        camera_y = self.set_state("camera_y", self.y - pyxel.height // 2)
-        #pyxel.camera(camera_x, camera_y)
 
+    def draw(self):
+        pyxel.camera(self.x - pyxel.width // 2, self.y - pyxel.height // 2)
         super().draw()

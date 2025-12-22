@@ -6,6 +6,4 @@ from game.personnage.entities.PNJ import PNJ
 class PersonnageService(HostService):
     def init(self):
 
-        self.engine.load("assets/personnages.pyxres")
-
         self.add_child(Joueur(self))

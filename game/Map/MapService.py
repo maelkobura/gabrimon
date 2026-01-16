@@ -7,7 +7,7 @@ from engine.services.Service import Service
 class MapService(Service):
 
     def init(self):
-        self.engine.load("assets/res (5).pyxres")
+        self.engine.load("assets/GABRIMON.pyxres")
 
 
     @priority(0)

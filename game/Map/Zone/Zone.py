@@ -3,6 +3,7 @@ import pyxel
 
 from game.Map.Zone.ZoneEvent import ZoneEvent
 
+ENABLE_DEBUG = False
 
 class Zone(Entity):
     def __init__(self, service,x,y,w,h,events=ZoneEvent()):
@@ -34,4 +35,6 @@ class Zone(Entity):
                 and self.y <= y <= (self.y + self.h))
 
     def draw(self):
-        pyxel.rect(self.x,self.y,self.w,self.h, 9)
+
+        if ENABLE_DEBUG:
+            pyxel.rect(self.x, self.y, self.w, self.h, 9)

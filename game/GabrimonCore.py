@@ -8,6 +8,6 @@ from game.personnage.PersonnageService import PersonnageService
 class GabrimonCore(Game):
     def init(self):
         self.engine.reg_service("personnages", PersonnageService)
-        self.engine.reg_service("Map", MapService)
+        self.engine.reg_service("map", MapService)
         self.engine.reg_service("zone", ZoneService)
         self.engine.reg_service("terrain", TerrainService)

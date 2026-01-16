@@ -8,4 +8,4 @@ from game.Map.Zone.Zone import Zone
 
 class ZoneService(HostService):
     def init(self):
-        self.add_child(Zone(self, -50,-100,50,50))
+        self.add_child(Zone(self, 0,0,50,50))

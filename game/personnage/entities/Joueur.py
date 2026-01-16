@@ -24,6 +24,8 @@ class Joueur(Personnage):
             dy = self.speed
 
         self.get_component("mouvement").move(dx, dy)
+        self.set_state("player_x", self.x)
+        self.set_state("player_y", self.y)
         super().update()
 
 

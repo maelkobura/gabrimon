@@ -1,5 +1,4 @@
 from engine.entity.Component import Component
-from example.collision.Collision import Collision
 
 
 class MouvementComponent(Component):

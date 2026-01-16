@@ -9,8 +9,8 @@ class Joueur(Personnage):
         super().__init__(service)
         self.speed = 2
         self.register_component("mouvement", MouvementComponent)
-        self.x = 120
-        self.y = 110
+        self.x = 1016
+        self.y = 396
 
     def update(self):
         dx, dy = 0, 0

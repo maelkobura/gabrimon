@@ -5,13 +5,12 @@ class MouvementComponent(Component):
     def move(self, dx, dy):
 
         speed = self.entity.service.engine.get_service("terrain").get_speed(self.entity.x + self.entity.taille_x/2, self.entity.y + self.entity.taille_y/2)
-
         # X
-        if not self.entity.service.engine.get_service("terrain").can_i(self.entity.x + dx, self.entity.y, self.entity.taille_x, self.entity.taille_y):
+        if self.entity.service.engine.get_service("terrain").can_i(self.entity.x + dx, self.entity.y, self.entity.taille_x, self.entity.taille_y):
             self.entity.x += dx*speed
 
         # Y
-        if not self.entity.service.engine.get_service("terrain").can_i(self.entity.x, self.entity.y+dy, self.entity.taille_x, self.entity.taille_y):
+        if self.entity.service.engine.get_service("terrain").can_i(self.entity.x, self.entity.y+dy, self.entity.taille_x, self.entity.taille_y):
             self.entity.y += dy*speed
 
         if dx < 0:

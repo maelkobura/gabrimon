@@ -42,3 +42,4 @@ class Personnage(Entity):
 
     def draw(self):
         pyxel.blt(self.x, self.y, 1, (self.sprite_index + self.animation_index)*16, self.sheet_index*16, self.taille_x, self.taille_y)
+        super().draw()

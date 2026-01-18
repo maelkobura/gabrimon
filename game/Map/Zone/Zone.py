@@ -6,11 +6,12 @@ from game.Map.Zone.ZoneEvent import ZoneEvent
 ENABLE_DEBUG = False
 
 class Zone(Entity):
-    def __init__(self, service,x,y,w,h,events=ZoneEvent()):
+    def __init__(self, service,x,y,w,h,events=ZoneEvent(),world=0):
         super().__init__(service)
         self.set_size(x,y,w,h)
         self.events = events
         self.container = []
+        self.world = world
 
     def set_size(self,x,y,w,h):
         self.x = x

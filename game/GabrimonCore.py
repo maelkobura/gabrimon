@@ -1,4 +1,5 @@
 from engine.Game import Game
+from game.Map.Indoor.IndoorService import IndoorService
 from game.Map.MapService import MapService
 from game.Map.Terrain.TerrainService import TerrainService
 from game.Map.Zone.ZoneService import ZoneService
@@ -13,3 +14,4 @@ class GabrimonCore(Game):
         self.engine.reg_service("zone", ZoneService)
         self.engine.reg_service("terrain", TerrainService)
         self.engine.reg_service("ui", UIService)
+        self.engine.reg_service("indoor", IndoorService)

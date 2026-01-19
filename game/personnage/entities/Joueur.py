@@ -41,6 +41,7 @@ class Joueur(Personnage):
 
         if self.get_component("transition").transition == 0:
             self.teleport(1, 56, 134)
+            self.direction = 1
             self.get_component("transition").transition = 2
 
         super().update()

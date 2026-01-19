@@ -4,6 +4,7 @@ from game.personnage.composants.MouvementComponent import MouvementComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
 
+CLICK_DEBUG = True
 
 class Joueur(Personnage):
     def __init__(self, service):
@@ -16,6 +17,10 @@ class Joueur(Personnage):
         self.y = 396
         self.doorstep = 0
 
+        if CLICK_DEBUG:
+            pyxel.mouse(True)
+
+
     def update(self):
         dx, dy = 0, 0
         if pyxel.btn(pyxel.KEY_LEFT):
@@ -26,6 +31,11 @@ class Joueur(Personnage):
             dy = -self.speed
         elif pyxel.btn(pyxel.KEY_DOWN):
             dy = self.speed
+
+        if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
+            x = pyxel.mouse_x
+            y = pyxel.mouse_y
+            print(f"Location : x={x}, y={y}")
 
         self.get_component("mouvement").move(dx, dy)
         self.set_state("player_x", self.x)

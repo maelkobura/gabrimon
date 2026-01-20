@@ -16,6 +16,7 @@ class Joueur(Personnage):
         self.x = 1016
         self.y = 396
         self.doorstep = 0
+        self.entering = False
 
         self.freeze_movement = False
         self.freeze_interact = False
@@ -47,6 +48,11 @@ class Joueur(Personnage):
         # TODO Faire mieux
 
         if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact:
+            self.entering = True
+            self.freeze_movement = True
+            self.freeze_interact = True
+
+        if self.entering:
             self.enter()
 
         if self.get_component("transition").transition == 0:
@@ -57,12 +63,16 @@ class Joueur(Personnage):
         super().update()
 
     def enter(self):
-        self.freeze_movement = True
-        self.freeze_interact = True
-        if self.doorstep != 0:
-            print("Entering to door", self.doorstep)
-            self.get_component("transition").transition = 1
-
+        if self.doorstep == 0:
+            return
+        if self.get_component("transition").transition == 0:
+            indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)
+            if indoor:
+                self.teleport(indoor.world, indoor.x, indoor.y)
+                self.get_component("transition").transition = 2
+                self.freeze_movement=False
+                self.freeze_interact=False
+                self.entering = False
 
     def set_doorstep(self, id):
         self.doorstep = id

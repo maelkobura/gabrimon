@@ -2,6 +2,27 @@ import pyxel
 
 from Joueur import Joueur
 
+def dessiner_barre_pv(x, y, largeur, hauteur, pv, pv_max):
+    # Cadre
+    pyxel.rect(x - 1, y - 1, largeur + 2, hauteur + 2, 7)
+
+    # Calcul du ratio
+    ratio = pv / pv_max
+    if ratio < 0:
+        ratio = 0
+
+    largeur_pv = int(largeur * ratio)
+
+    # Couleur selon PV
+    if ratio > 0.5:
+        couleur = 11  # vert
+    elif ratio > 0.2:
+        couleur = 10  # orange
+    else:
+        couleur = 8   # rouge
+
+    # Barre de PV
+    pyxel.rect(x, y, largeur_pv, hauteur, couleur)
 
 class Combat:
     def __init__(self, joueur: Joueur, ennemi):
@@ -142,11 +163,29 @@ class Combat:
     def draw(self):
         pyxel.cls(0)
 
-        # Affichage PV
-        pyxel.text(10, 10, f"{self.joueur.gabrimon_actuel.nom} PV: {self.joueur.gabrimon_actuel.pv}", 7)
-        # Affichage ennemi UNIQUEMENT si le combat n'est pas fini
-        if self.etat != "fin":
-            pyxel.text(10, 20, f"{self.ennemi.nom} PV: {self.ennemi.pv}", 8)
+        #Affichage pv en forme de barre
+            # Gabrimon du joueur
+        pyxel.text(10, 5, self.joueur.gabrimon_actuel.nom, 7)
+        dessiner_barre_pv(
+            x=10,
+            y=15,
+            largeur=60,
+            hauteur=6,
+            pv=self.joueur.gabrimon_actuel.pv,
+            pv_max=self.joueur.gabrimon_actuel.pv_max
+        )
+
+        # Gabrimon ennemi
+        pyxel.text(90, 5, self.ennemi.nom, 7)
+        dessiner_barre_pv(
+            x=90,
+            y=15,
+            largeur=60,
+            hauteur=6,
+            pv=self.ennemi.pv,
+            pv_max=self.ennemi.pv_max
+        )
+
 
         # Menu Gabrimon
         if self.etat == "choix_gabrimon":

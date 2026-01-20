@@ -17,6 +17,9 @@ class Joueur(Personnage):
         self.y = 396
         self.doorstep = 0
 
+        self.freeze_movement = False
+        self.freeze_interact = False
+
         if CLICK_DEBUG:
             pyxel.mouse(True)
 
@@ -43,11 +46,8 @@ class Joueur(Personnage):
 
         # TODO Faire mieux
 
-        if pyxel.btn(pyxel.KEY_E):
-            if self.doorstep != 0:
-                print("Entering to door", self.doorstep)
-                self.doorstep = 0
-                self.get_component("transition").transition = 1
+        if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact:
+            self.enter()
 
         if self.get_component("transition").transition == 0:
             self.teleport(1, 56, 134)
@@ -55,6 +55,14 @@ class Joueur(Personnage):
             self.get_component("transition").transition = 2
 
         super().update()
+
+    def enter(self):
+        self.freeze_movement = True
+        self.freeze_interact = True
+        if self.doorstep != 0:
+            print("Entering to door", self.doorstep)
+            self.get_component("transition").transition = 1
+
 
     def set_doorstep(self, id):
         self.doorstep = id

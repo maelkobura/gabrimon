@@ -15,56 +15,57 @@ def draw():
 pyxel.init(160, 120, title="Pokemon Combat")
 
 
-repos = Attaque ("Repos" , 0, 5)
+repos = Attaque ("Repos" , 5, "soin")
 
-etincelle = Attaque("etincelle", 20, 0)
-griffes_chaudes = Attaque("Griffes Chaudes", 30,0)
-souffle_brulant = Attaque("Souffle Brulant", 40,0)
+etincelle = Attaque("etincelle", 20, "degats")
+griffes_chaudes = Attaque("Griffes Chaudes", 30,"degats")
+souffle_brulant = Attaque("Souffle Brulant", 40,"degats")
 
 #Mouskin
-fouet_liane= Attaque("Fouet Liane", 20,0)
-pollen_soin = Attaque("Pollen Soin", 0, 20)
-charge_verte = Attaque("Charge Verte", 35,0)
+fouet_liane= Attaque("Fouet Liane", 20,"degats")
+pollen_soin = Attaque("Pollen Soin", 20, "soin")
+charge_verte = Attaque("Charge Verte", 35,"degats")
 
 #aquapti
-jet_deau= Attaque("Jet d'eau", 20,0)
-vague_rapide = Attaque("Vague Rapide", 35,0)
-bulle_percutante = Attaque("Bulle Percutante", 30, 0)
+jet_deau= Attaque("Jet d'eau", 20,"degats")
+vague_rapide = Attaque("Vague Rapide", 35,"degats")
+bulle_percutante = Attaque("Bulle Percutante", 30, "degats")
 
 #voltch
-etincoup = Attaque("Etincoup", 25,0)
-eclair = Attaque("Eclair", 40,0)
-vitesse_foudre = Attaque("Vitesse foudre", 30,0)
+etincoup = Attaque("Etincoup", 25,"degats")
+eclair = Attaque("Eclair", 40,"degats")
+vitesse_foudre = Attaque("Vitesse foudre", 30,"degats")
 
 #Roclin
-jet_de_pierre = Attaque("Jet de Pierre", 30,0)
-ecrasement =Attaque("Ecrasement", 45,0)
-mur_mineral = Attaque("Mur mineral", 0,15)
+jet_de_pierre = Attaque("Jet de Pierre", 30,"degats")
+ecrasement =Attaque("Ecrasement", 45,"degats")
+mur_mineral = Attaque("Mur mineral", 15,"soin")
 
 #Noctyra
-regard_noir = Attaque("Regard Noir", 20,0)
-ombre_vive = Attaque("Ombre vive", 35,0)
-morsure_nuit = Attaque("Morsure nuit", 40,0)
+regard_noir = Attaque("Regard Noir", 20,"degats")
+police = Attaque("Police", 35,"degats")
+ombre_vive = Attaque("Ombre vive", 35,"degats")
+morsure_nuit = Attaque("Morsure nuit", 40,"degats")
 
 #Givrin
-souffle_froid = Attaque("Soufle froid", 25,0)
-pic_de_glace =Attaque("Pic de glace", 35,0)
-gel_total =Attaque("Gel total", 45,0)
+souffle_froid = Attaque("Soufle froid", 25,"degats")
+pic_de_glace =Attaque("Pic de glace", 35,"degats")
+gel_total =Attaque("Gel total", 45,"degats")
 
 #aerion
-tornade = Attaque("Tornade", 30,0)
-coup_daile = Attaque("Coup d'aile", 25,0)
-rafale =Attaque("Rafale", 40,0)
+tornade = Attaque("Tornade", 30,"degats")
+coup_daile = Attaque("Coup d'aile", 25,"degats")
+rafale =Attaque("Rafale", 40,"degats")
 
 #psymio
-choc_mental = Attaque("Choc mental", 30,0)
-onde_psy =Attaque("Onde psy", 40,0)
-soin_mental = Attaque("Soin mental", 0,25)
+choc_mental = Attaque("Choc mental", 30,"degats")
+onde_psy =Attaque("Onde psy", 40,"degats")
+soin_mental = Attaque("Soin mental", 25,"soin")
 
 #Drakid
-griffe_dragon = Attaque("Griffe dragon", 35,0)
-rugissement = Attaque("Rugissement", 20,0)
-flamme_draco = Attaque("Flamme draco", 50,0)
+griffe_dragon = Attaque("Griffe dragon", 35,"degats")
+rugissement = Attaque("Rugissement", 20,"degats")
+flamme_draco = Attaque("Flamme draco", 50,"degats")
 
 flamigi = Gabrimon("Flamigi", 60, [etincelle,griffes_chaudes,souffle_brulant, repos])
 mouskin = Gabrimon("Mouskin", 70, [fouet_liane,pollen_soin,jet_deau, repos])

@@ -4,10 +4,8 @@ from game.gabrimon.GabrimonInfo import GabrimonInfo
 
 class GabrimonService(Service):
     def init(self):
+        pass
 
-        gabrimon = {"Flamino": GabrimonInfo("flamino", "Flamino", "feu" ,"brasier vit")
-                    ,"herbifang" : GabrimonInfo("herbifang", "Herbifang", "plante"),
-                    }
 
 
 

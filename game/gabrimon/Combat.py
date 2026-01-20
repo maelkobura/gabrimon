@@ -1,5 +1,7 @@
 import pyxel
+
 from Joueur import Joueur
+
 
 class Combat:
     def __init__(self, joueur: Joueur, ennemi):
@@ -13,18 +15,47 @@ class Combat:
         self.attaque_selectionnee = 0
         # Pokémon en combat
 
-        self.etat = "choix_gabrimon"   # choix / animation /fin
+        self.etat = "choix_action"   # choix / animation /fin
         self.selection_gabrimon = 0
+        self.selection_action = 0
         self.timer = 0
-
+        self.resultat = None  # "victoire", "defaite", "capture", "fuite"
 
     def update(self):
         # Si combat fini
         if self.etat == "fin":
             return
 
+        #Menu principle
+        elif self.etat == "choix_action":
+            options = ["Attaques" , "Gabrimon", "Capture", "Fuite"]
+            #déplacement dans le menu
+            if pyxel.btnp(pyxel.KEY_UP):
+                self.selection_action = (self.selection_action - 1) % len(options)
+            if pyxel.btnp(pyxel.KEY_DOWN):
+                self.selection_action = (self.selection_action + 1) % len(options)
+
+            #Validation
+            if pyxel.btnp(pyxel.KEY_RETURN):
+                choix = options[self.selection_action]
+                if choix == "Attaques":
+                    self.etat = "attaque"
+                    self.attaque_selectionnee = 0
+                elif choix == "Gabrimon":
+                    self.etat = "choix_gabrimon"
+                    self.selection_gabrimon = 0
+                elif choix == "Capture":
+                    self.etat = "capture"
+                    self;timer = 30
+                elif choix == "Fuite":
+                    self.etat = "fuite"
+                    self;timer = 30
+
+
+
+
         # Menu de choix Gabrimon
-        if self.etat == "choix_gabrimon":
+        elif self.etat == "choix_gabrimon":
             #Vérifier si tous les Gabrimon du joueur sont KO
             if self.joueur.tous_ko():
                 self.etat = "fin"
@@ -39,17 +70,24 @@ class Combat:
                 g = self.joueur.equipe[self.selection_gabrimon]
                 if not g.est_ko():
                     self.joueur.gabrimon_actuel = g
-                    self.etat = "choix"  # Retour menu attaques
+                    self.etat = "choix_action"  # Retour menu principle
 
         # Menu des attaques
-        elif self.etat == "choix" and self.tour == "joueur":
+        elif self.etat == "attaque" and self.tour == "joueur":
+
+            attaques = self.joueur.gabrimon_actuel.attaques
+
             if pyxel.btnp(pyxel.KEY_UP):
                 self.attaque_selectionnee = (self.attaque_selectionnee - 1) % len(self.joueur.gabrimon_actuel.attaques)
             if pyxel.btnp(pyxel.KEY_DOWN):
                 self.attaque_selectionnee = (self.attaque_selectionnee + 1) % len(self.joueur.gabrimon_actuel.attaques)
             if pyxel.btnp(pyxel.KEY_RETURN):
-                attaque = self.joueur.gabrimon_actuel.attaques[self.attaque_selectionnee]
-                self.joueur.gabrimon_actuel.attaquer(attaque, self.ennemi)
+                capacite = attaques[self.attaque_selectionnee]
+
+                if capacite.type_action == "degats":
+                    self.joueur.gabrimon_actuel.utiliser_capacite(capacite, self.ennemi)
+                elif capacite.type_action == "soin":
+                    self.joueur.gabrimon_actuel.utiliser_capacite(capacite, None)
 
                 if self.ennemi.est_ko():
                     self.etat = "fin"
@@ -59,12 +97,38 @@ class Combat:
                 self.timer = 30
                 self.etat = "animation"
 
+        #Capture
+        elif self.etat == "capture":
+            import random
+            if random.random() < 0.5:
+                #capture réussie
+                self.resultat = "capture"
+                self.etat = "fin"
+                print("Réussi")
+            else:
+                #échec
+                self.tour = "ennemi"
+                self.timer = 30
+                self.etat = "animation"
+                print("Échec")
+
+        elif self.etat == "fuite":
+            import random
+            if random.random() < 0.7:  # 70% chance de fuir
+                self.etat = "fin"
+                self.resultat = "fuite"
+                print("Fuite")
+            else:
+                self.tour = "ennemi"
+                self.etat = "animation"
+                print("pas Fuite")
+
         # Tour de l'ennemi
         elif self.etat == "animation" and self.tour == "ennemi":
             self.timer -= 1
             if self.timer <= 0:
                 attaque = self.ennemi.attaques[0]
-                self.ennemi.attaquer(attaque, self.joueur.gabrimon_actuel)
+                self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
 
                 if self.joueur.gabrimon_actuel.est_ko():
                     self.etat = "choix_gabrimon"
@@ -72,13 +136,17 @@ class Combat:
                     self.tour = "joueur"
                 else:
                     self.tour = "joueur"
-                    self.etat = "choix"
+                    self.etat = "choix_action"
+
+
     def draw(self):
         pyxel.cls(0)
 
         # Affichage PV
         pyxel.text(10, 10, f"{self.joueur.gabrimon_actuel.nom} PV: {self.joueur.gabrimon_actuel.pv}", 7)
-        pyxel.text(10, 20, f"{self.ennemi.nom} PV: {self.ennemi.pv}", 8)
+        # Affichage ennemi UNIQUEMENT si le combat n'est pas fini
+        if self.etat != "fin":
+            pyxel.text(10, 20, f"{self.ennemi.nom} PV: {self.ennemi.pv}", 8)
 
         # Menu Gabrimon
         if self.etat == "choix_gabrimon":
@@ -89,14 +157,28 @@ class Combat:
                 pyxel.text(20, 60 + i*10, f"{g.nom} {status}", couleur)
 
         # Menu attaques
-        if self.etat == "choix":
+        if self.etat == "attaque":
             pyxel.text(10, 50, "Choisis une attaque :", 7)
             for i, a in enumerate(self.joueur.gabrimon_actuel.attaques):
                 couleur = 10 if i == self.attaque_selectionnee else 7
                 pyxel.text(20, 60 + i*10, a.nom, couleur)
 
+        if self.etat == "choix_action":
+            options = ["Attaques", "Gabrimon", "Capture", "Fuite"]
+            pyxel.text(10, 50, "Que faire ?", 7)
+            for i, opt in enumerate(options):
+                couleur = 10 if i == self.selection_action else 7
+                pyxel.text(20, 60 + i * 10, opt, couleur)
+
         # Affichage victoire / défaite
-        if self.etat == "fin":
+        if self.etat == "fin" and self.resultat == "capture" or self.resultat == "fuite":
+            if self.resultat == "capture":
+                pyxel.text(60, 50, "Gabrimon capturer", pyxel.COLOR_YELLOW)
+            elif self.resultat == "fuite":
+                pyxel.text(30, 50, "Vous decider de fuir le combat", pyxel.COLOR_YELLOW)
+
+
+        elif self.etat == "fin":
             if self.ennemi.est_ko():
                 pyxel.text(60, 50, "VICTOIRE", pyxel.COLOR_YELLOW)
             else:

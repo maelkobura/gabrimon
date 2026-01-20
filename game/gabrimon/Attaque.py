@@ -1,5 +1,5 @@
 class Attaque:
-    def __init__(self, nom, degats, soin):
+    def __init__(self, nom, valeur, type_action):
         self.nom = nom
-        self.degats = degats
-        self.soin = soin
+        self.valeur = valeur # dégâts OU soins
+        self.type_action = type_action # "degats" ou "soin"

@@ -5,13 +5,16 @@ class Gabrimon:
         self.pv = pv_max
         self.attaques = attaques
 
-    def attaquer(self, attaque, cible):
-        cible.subir_degats(attaque.degats)
+    def utiliser_capacite(self, capacite, cible):
+        if capacite.type_action == "degats":
+            cible.pv -= capacite.valeur
+            if cible.pv < 0:
+                cible.pv = 0
 
-    def subir_degats(self, degats):
-        self.pv -= degats
-        if self.pv < 0:
-            self.pv = 0
+        elif capacite.type_action == "soin":
+            self.pv += capacite.valeur
+            if self.pv > self.pv_max:
+                self.pv = self.pv_max
 
     def est_ko(self):
-        return self.pv == 0
+        return self.pv <= 0

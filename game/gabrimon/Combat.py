@@ -5,14 +5,18 @@ class Combat:
     def __init__(self, joueur: Joueur, ennemi):
         self.joueur = joueur
         self.ennemi = ennemi
+
+        #gabrimon actif
+        self.joueur.gabrimon_actuel = self.joueur.equipe[0]
+
         self.tour = "joueur"
         self.attaque_selectionnee = 0
         # Pokémon en combat
-        self.joueur.gabrimon_actuel = self.joueur.equipe[0]  # On choisit le premier par défaut
+
         self.etat = "choix_gabrimon"   # choix / animation /fin
         self.selection_gabrimon = 0
         self.timer = 0
-        
+
 
     def update(self):
         # Si combat fini
@@ -25,7 +29,7 @@ class Combat:
             if self.joueur.tous_ko():
                 self.etat = "fin"
                 return  # fin du combat, défaite automatique
-            
+
             # Menu pour choisir un Gabrimon vivant
             if pyxel.btnp(pyxel.KEY_UP):
                 self.selection_gabrimon = (self.selection_gabrimon - 1) % len(self.joueur.equipe)

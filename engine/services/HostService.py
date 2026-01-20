@@ -10,6 +10,7 @@ class HostService(Service):
 
     def add_child(self, entity: Entity):
         self.entities.append(entity)
+        return entity
 
     def remove_child(self, entity: Entity):
         self.entities.remove(entity)

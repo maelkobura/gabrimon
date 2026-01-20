@@ -20,10 +20,12 @@ class Entity:
         pass
 
     def update(self):
-        pass
+        for i in self.components.values():
+            i.update()
 
     def draw(self):
-        pass
+        for i in self.components.values():
+            i.draw()
 
     def get_state(self, name):
         return self.service.get_state(name)

@@ -1,7 +1,7 @@
 from engine.Engine import Engine
-from game.GabrimonCore import GabrimoneCore
+from game.GabrimonCore import GabrimonCore
 
 Engine("Gabrimon",
        gamepath="../game/",
-       game_class=GabrimoneCore)
+       game_class=GabrimonCore)
 print("bonjour")

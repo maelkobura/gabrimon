@@ -42,6 +42,12 @@ class Combat:
         self.timer = 0
         self.resultat = None  # "victoire", "defaite", "capture", "fuite"
 
+        self.xp_a_ajouter = 0
+        self.animation_xp = False
+
+        if joueur.gabrimon_actuel is ennemi:
+            raise ValueError("Le Gabrimon ennemi doit être une copie")
+
     def update(self):
         # Si combat fini
         if self.etat == "fin":
@@ -111,6 +117,8 @@ class Combat:
                     self.joueur.gabrimon_actuel.utiliser_capacite(capacite, None)
 
                 if self.ennemi.est_ko():
+                    xp_gagnee = 10 * self.ennemi.niveau
+                    self.joueur.gabrimon_actuel.gagner_xp(xp_gagnee)
                     self.etat = "fin"
                     return
 
@@ -148,7 +156,9 @@ class Combat:
         elif self.etat == "animation" and self.tour == "ennemi":
             self.timer -= 1
             if self.timer <= 0:
-                attaque = self.ennemi.attaques[0]
+                import random
+                a = random.randint(1,3)
+                attaque = self.ennemi.attaques[a]
                 self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
 
                 if self.joueur.gabrimon_actuel.est_ko():
@@ -163,12 +173,13 @@ class Combat:
     def draw(self):
         pyxel.cls(0)
 
+
         #Affichage pv en forme de barre
             # Gabrimon du joueur
-        pyxel.text(10, 5, self.joueur.gabrimon_actuel.nom, 7)
+        pyxel.text(10, 95, self.joueur.gabrimon_actuel.nom, 7)
         dessiner_barre_pv(
             x=10,
-            y=15,
+            y=105,
             largeur=60,
             hauteur=6,
             pv=self.joueur.gabrimon_actuel.pv,
@@ -187,27 +198,49 @@ class Combat:
         )
 
 
+
+
+        # ----- BARRE D'XP -----
+        g = self.joueur.gabrimon_actuel
+
+        barre_x = 9
+        barre_y = 112
+        barre_largeur = 62
+        barre_hauteur = 2
+
+        # Fond de la barre
+        pyxel.rect(barre_x, barre_y, barre_largeur, barre_hauteur, 5)
+
+        # Calcul largeur remplie
+        xp_ratio = g.xp / g.xp_max
+        largeur_xp = int(barre_largeur * xp_ratio)
+
+        # Barre remplie
+        pyxel.rect(barre_x, barre_y, largeur_xp, barre_hauteur, 11)
+
+
+
         # Menu Gabrimon
         if self.etat == "choix_gabrimon":
-            pyxel.text(10, 50, "Choisis ton Gabrimon :", 7)
+            pyxel.text(10, 10, "Choisis ton Gabrimon :", 7)
             for i, g in enumerate(self.joueur.equipe):
                 couleur = 10 if i == self.selection_gabrimon else 7
                 status = "(KO)" if g.est_ko() else ""
-                pyxel.text(20, 60 + i*10, f"{g.nom} {status}", couleur)
+                pyxel.text(20, 20 + i*10, f"{g.nom} {status}", couleur)
 
         # Menu attaques
         if self.etat == "attaque":
-            pyxel.text(10, 50, "Choisis une attaque :", 7)
+            pyxel.text(10, 10, "Choisis une attaque :", 7)
             for i, a in enumerate(self.joueur.gabrimon_actuel.attaques):
                 couleur = 10 if i == self.attaque_selectionnee else 7
-                pyxel.text(20, 60 + i*10, a.nom, couleur)
+                pyxel.text(20, 20 + i*10, a.nom, couleur)
 
         if self.etat == "choix_action":
             options = ["Attaques", "Gabrimon", "Capture", "Fuite"]
-            pyxel.text(10, 50, "Que faire ?", 7)
+            pyxel.text(10, 5, "Que faire ?", 7)
             for i, opt in enumerate(options):
                 couleur = 10 if i == self.selection_action else 7
-                pyxel.text(20, 60 + i * 10, opt, couleur)
+                pyxel.text(20, 15 + i * 10, opt, couleur)
 
         # Affichage victoire / défaite
         if self.etat == "fin" and self.resultat == "capture" or self.resultat == "fuite":

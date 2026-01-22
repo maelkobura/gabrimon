@@ -52,8 +52,6 @@ class Joueur(Personnage):
         self.set_state("player_x", self.x)
         self.set_state("player_y", self.y)
 
-        # TODO Faire mieux
-
         if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact and self.doorstep != 0:
             indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)
             if self.service.engine.get_service("map").current_world == 0:
@@ -73,4 +71,7 @@ class Joueur(Personnage):
 
     def draw(self):
         pyxel.camera(self.x - pyxel.width // 2, self.y - pyxel.height // 2)
+        if self.doorstep != 0:
+            personnage.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=32, h=16)
+            personnage.service.engine.get_service("ui").draw_text(self.indoor.name, 15, 105, 0)
         super().draw()

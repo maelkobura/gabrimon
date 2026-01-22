@@ -245,7 +245,7 @@ class Combat:
         # Affichage victoire / défaite
         if self.etat == "fin" and self.resultat == "capture" or self.resultat == "fuite":
             if self.resultat == "capture":
-                pyxel.text(60, 50, "Gabrimon capturer", pyxel.COLOR_YELLOW)
+                pyxel.text(60, 50, "La capture a reussi", pyxel.COLOR_YELLOW)
             elif self.resultat == "fuite":
                 pyxel.text(30, 50, "Vous decider de fuir le combat", pyxel.COLOR_YELLOW)
 

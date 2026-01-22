@@ -28,6 +28,7 @@ class Joueur(Personnage):
 
 
     def update(self):
+        super().update()
         dx, dy = 0, 0
         if pyxel.btn(pyxel.KEY_LEFT):
             dx = -self.speed
@@ -41,7 +42,11 @@ class Joueur(Personnage):
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x
             y = pyxel.mouse_y
-            print(f"Location : x={x}, y={y}")
+            print(f"Location (UI Space) : x={x}, y={y}")
+        if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            x = pyxel.mouse_x + (self.x - pyxel.width // 2)
+            y = pyxel.mouse_y + (self.y - pyxel.height // 2)
+            print(f"Location (World Space) : x={x}, y={y}")
 
         self.get_component("mouvement").move(dx, dy)
         self.set_state("player_x", self.x)
@@ -57,8 +62,6 @@ class Joueur(Personnage):
                 self.get_component("teleportation").teleport(indoor.outside_pos)
             self.doorstep=0
 
-
-        super().update()
 
     def set_doorstep(self, id):
         self.doorstep = id

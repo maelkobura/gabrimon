@@ -17,19 +17,20 @@ class TeleportationComponent(Component):
     def teleport(self, pos: Position,transition=True):
         if not transition:
             self._teleport(pos)
+            return
         self.next_pos = pos
         self.entity.freeze_movement = True
         self.entity.freeze_interact = True
-        self.get_component("transition").transition = 1
+        self.entity.get_component("transition").transition = 1
 
 
-    def update(self):
+    def draw(self):
         if self.next_pos is None:
             return
-        if self.get_component("transition").transition == 0:
+        if self.entity.get_component("transition").transition == 0:
             self._teleport(self.next_pos)
             self.next_pos = None
             self.entity.freeze_movement = False
             self.entity.freeze_interact = False
-            self.get_component("transition").transition = 2
+            self.entity.get_component("transition").transition = 2
 

@@ -7,8 +7,8 @@ class IndoorData:
     def __init__(self, service, id: int, name: str, indoor_pos: Position, outside_pos: Position, go_coor: tuple, return_coor: tuple):
         self.id = id
         self.name = name
-        self.indoor_point = indoor_pos
-        self.outdoor_point = outside_pos
+        self.indoor_pos = indoor_pos
+        self.outdoor_pos = outside_pos
         self.go_coor = go_coor
         self.return_coor = return_coor
 

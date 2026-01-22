@@ -1,7 +1,7 @@
 from engine.services.Service import Service
 import pyxel
 
-DISABLE_COLLISIONS = True
+DISABLE_COLLISIONS = False
 
 class TerrainService(Service):
     def init(self):

@@ -8,12 +8,13 @@ class IndoorData:
         self.id = id
         self.name = name
         self.indoor_pos = indoor_pos
-        self.outdoor_pos = outside_pos
+        self.outside_pos = outside_pos
         self.go_coor = go_coor
         self.return_coor = return_coor
 
         zone_service = service.engine.get_service("zone")
 
         go_zone = Zone(zone_service, go_coor[0][0], go_coor[0][1], go_coor[1][0], go_coor[1][1], HouseZone(self))
-        # TODO Zone de sortie
+        out_zone = Zone(zone_service, return_coor[0][0], return_coor[0][1], return_coor[1][0], return_coor[1][1], HouseZone(self),1)
         service.engine.get_service("zone").add_child(go_zone)
+        service.engine.get_service("zone").add_child(out_zone)

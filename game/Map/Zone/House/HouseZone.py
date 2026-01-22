@@ -8,7 +8,7 @@ class HouseZone(ZoneEvent):
     def on_update(self, personnage):
         if type(personnage) == Joueur:
             personnage.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=32, h=16)
-            personnage.service.engine.get_service("ui").draw_text("Maison", 15, 105, 0)
+            personnage.service.engine.get_service("ui").draw_text(self.indoor.name, 15, 105, 0)
 
     def on_enter(self, personnage):
         if type(personnage) == Joueur:

@@ -1,6 +1,8 @@
 from engine.services.Service import Service
 import pyxel
 
+DISABLE_COLLISIONS = True
+
 class TerrainService(Service):
     def init(self):
         # Walls et speed par tilemap
@@ -57,6 +59,8 @@ class TerrainService(Service):
         self.tilemap_speed[tilemap_id] = speed_dict
 
     def can_i(self, x, y, largeur, hauteur, tilemap_id=None):
+        if DISABLE_COLLISIONS:
+            return True
         if tilemap_id is None:
             tilemap_id = self.get_state("current_world")
 

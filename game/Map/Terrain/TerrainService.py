@@ -17,6 +17,7 @@ class TerrainService(Service):
             (0, 2),
             (1, 2),
             (2, 2),
+            (6, 0)
         ]
 
         speed_1 = {

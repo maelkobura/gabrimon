@@ -1,12 +1,13 @@
 from engine.services.Service import Service
 from game.Map.Indoor.IndoorData import IndoorData
+from game.Map.Position import Position
 
 
 class IndoorService(Service):
 
     def init(self):
         self.indoors = {}
-        self.indoors[0] = IndoorData(self, 1, "Maison", (0, 0), (0, 0), ((752,512),(15,17)), ((0,0),(0,0)))
+        self.indoors[0] = IndoorData(self, 1, "Maison", Position(0,0, 0, 1), Position(0,0, 0, 0), ((752,512),(15,17)), ((0,0),(0,0)))
         
     def get_indoor(self, id):
         for indoor in self.indoors.values():

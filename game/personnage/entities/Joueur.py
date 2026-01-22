@@ -1,6 +1,7 @@
 import pyxel
 
 from game.personnage.composants.MouvementComponent import MouvementComponent
+from game.personnage.composants.TeleportationComponent import TeleportationComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
 
@@ -12,6 +13,7 @@ class Joueur(Personnage):
         self.speed = 2
         self.register_component("mouvement", MouvementComponent)
         self.register_component("transition", TransitionAnimationComponent)
+        self.register_component("teleportation", TeleportationComponent)
 
         self.x = 1016
         self.y = 396
@@ -47,32 +49,16 @@ class Joueur(Personnage):
 
         # TODO Faire mieux
 
-        if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact:
-            self.entering = True
-            self.freeze_movement = True
-            self.freeze_interact = True
+        if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact and self.doorstep != 0:
+            indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)
+            if self.service.engine.get_service("map").current_world == 0:
+                self.get_component("teleportation").teleport(indoor.indoor_pos)
+            else:
+                self.get_component("teleportation").teleport(indoor.outside_pos)
+            self.doorstep=0
 
-        if self.entering:
-            self.enter()
-
-        if self.get_component("transition").transition == 0:
-            self.teleport(1, 56, 134)
-            self.direction = 1
-            self.get_component("transition").transition = 2
 
         super().update()
-
-    def enter(self):
-        if self.doorstep == 0:
-            return
-        if self.get_component("transition").transition == 0:
-            indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)
-            if indoor:
-                self.teleport(indoor.world, indoor.x, indoor.y)
-                self.get_component("transition").transition = 2
-                self.freeze_movement=False
-                self.freeze_interact=False
-                self.entering = False
 
     def set_doorstep(self, id):
         self.doorstep = id

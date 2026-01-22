@@ -1,13 +1,14 @@
+from game.Map.Position import Position
 from game.Map.Zone.Zone import Zone
 from game.Map.Zone.House.HouseZone import HouseZone
 
 
 class IndoorData:
-    def __init__(self, service, id: int, name: str, indoor_point: tuple, outdoor_point: tuple, go_coor: tuple, return_coor: tuple):
+    def __init__(self, service, id: int, name: str, indoor_pos: Position, outside_pos: Position, go_coor: tuple, return_coor: tuple):
         self.id = id
         self.name = name
-        self.indoor_point = indoor_point
-        self.outdoor_point = outdoor_point
+        self.indoor_point = indoor_pos
+        self.outdoor_point = outside_pos
         self.go_coor = go_coor
         self.return_coor = return_coor
 

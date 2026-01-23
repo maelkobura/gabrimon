@@ -240,11 +240,12 @@ class Combat:
 
         if self.etat == "choix_action":
             options = ["Attaques", "Gabrimon", "sacs", "Fuite"]
-            pyxel.text(10, 5, "Que faire ?", 7)
+            pyxel.text(10, 15, "Que faire ?", 7)
             for i, opt in enumerate(options):
                 couleur = 10 if i == self.selection_action else 7
-                pyxel.text(20, 15 + i * 10, opt, couleur)
-
+                pyxel.text(20, 25 + i * 10, opt, couleur)
+            pyxel.text(20, 5, "Capture ", 7)
+            pyxel.text(22, 7, "E", 7)
 
         # Affichage victoire / défaite
         if self.etat == "fin" and self.resultat == "capture" or self.resultat == "fuite":

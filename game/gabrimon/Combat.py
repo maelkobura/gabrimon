@@ -36,7 +36,7 @@ class Combat:
         self.attaque_selectionnee = 0
         # Pokémon en combat
 
-        self.etat = "choix_action"   # choix / animation /fin
+        self.etat = "choix_action"
         self.selection_gabrimon = 0
         self.selection_action = 0
         self.timer = 0
@@ -55,7 +55,7 @@ class Combat:
 
         #Menu principle
         elif self.etat == "choix_action":
-            options = ["Attaques" , "Gabrimon", "Capture", "Fuite"]
+            options = ["Attaques" , "Gabrimon", "sacs", "Fuite"]
             #déplacement dans le menu
             if pyxel.btnp(pyxel.KEY_UP):
                 self.selection_action = (self.selection_action - 1) % len(options)
@@ -71,12 +71,15 @@ class Combat:
                 elif choix == "Gabrimon":
                     self.etat = "choix_gabrimon"
                     self.selection_gabrimon = 0
-                elif choix == "Capture":
-                    self.etat = "capture"
-                    self;timer = 30
+                elif choix == "sacs":
+                    self.etat = "sacs"
+                    self.timer = 30
                 elif choix == "Fuite":
                     self.etat = "fuite"
-                    self;timer = 30
+                    self.timer = 30
+            if pyxel.btnp(pyxel.KEY_E):
+                self.etat = "capture"
+                self.timer = 30
 
 
 
@@ -236,11 +239,12 @@ class Combat:
                 pyxel.text(20, 20 + i*10, a.nom, couleur)
 
         if self.etat == "choix_action":
-            options = ["Attaques", "Gabrimon", "Capture", "Fuite"]
+            options = ["Attaques", "Gabrimon", "sacs", "Fuite"]
             pyxel.text(10, 5, "Que faire ?", 7)
             for i, opt in enumerate(options):
                 couleur = 10 if i == self.selection_action else 7
                 pyxel.text(20, 15 + i * 10, opt, couleur)
+
 
         # Affichage victoire / défaite
         if self.etat == "fin" and self.resultat == "capture" or self.resultat == "fuite":

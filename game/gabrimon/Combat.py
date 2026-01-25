@@ -25,6 +25,7 @@ def dessiner_barre_pv(x, y, largeur, hauteur, pv, pv_max):
     pyxel.rect(x, y, largeur_pv, hauteur, couleur)
 
 
+
 class Combat:
     def __init__(self, joueur: Joueur, ennemi):
         self.joueur = joueur
@@ -47,6 +48,7 @@ class Combat:
         self.gabriball_y = 0
         self.gabriball_timer = 0
         self.capture_reussie = False
+        self.message = ""
 
         self.xp_a_ajouter = 0
         self.animation_xp = False
@@ -141,23 +143,33 @@ class Combat:
 
         #Capture
         elif self.etat == "capture":
+
+            # ❌ impossible si ennemi KO
+            if self.ennemi.est_ko():
+                self.message = "Impossible de capturer"
+                return
+
+            # ✅ taux TOUJOURS défini
+            taux = 1 - (self.ennemi.pv / self.ennemi.pv_max)
             import random
-            if random.random() < 1:
+            if random.random() < taux:
+                self.capture_reussie = True
                 #capture réussie
                 self.gabriball_x = 120
                 self.gabriball_y = 70
                 self.gabriball_timer = 0
-
-
                 self.etat = "capture_animation"
                 print("Réussi")
                 self.joueur.ajouter_gabrimon(self.ennemi)
 
             else:
                 #échec
-                self.tour = "ennemi"
-                self.timer = 30
-                self.etat = "animation"
+                self.gabriball_x = 120
+                self.gabriball_y = 70
+                self.gabriball_timer = 0
+                self.etat = "capture_animation"
+                self.capture_reussie = False
+
                 print("Échec")
 
         if self.etat == "capture_animation":
@@ -173,8 +185,19 @@ class Combat:
                     self.gabriball_x += 1
                 else:
                     self.gabriball_x -= 1
-            else:
-                self.etat = "capture_text"
+            elif self.gabriball_timer == 100:
+                if self.capture_reussie:
+                    self.message = "Gabrimon capture !"
+                    self.joueur.ajouter_gabrimon(self.ennemi)
+                    self.etat = "fin"
+                    return
+                else:
+                    self.message = "Capture echouee..."
+                    self.timer = 30
+                    self.etat = "animation"
+                    self.tour = "ennemi"
+                    return
+
 
 
 
@@ -289,11 +312,6 @@ class Combat:
             pyxel.circ(40, 4 + 1, 1, 0)
             pyxel.text(30, 3, "E", 7)
 
-
-
-        if self.etat == "capture_text":
-            pyxel.text(60, 50, "La capture a reussi", pyxel.COLOR_YELLOW)
-
         if self.etat == "fin" and self.resultat == "fuite":
             pyxel.text(30, 50, "Vous decider de fuir le combat", pyxel.COLOR_YELLOW)
 
@@ -301,8 +319,10 @@ class Combat:
         elif self.etat == "fin":
             if self.ennemi.est_ko():
                 pyxel.text(60, 50, "VICTOIRE", pyxel.COLOR_YELLOW)
-            else:
-                pyxel.text(60, 50, "DEFAITE", pyxel.COLOR_RED)
+            elif self.capture_reussie:
+                pyxel.text(60, 50, "Gabrimon capture !", pyxel.COLOR_YELLOW)
+            elif self.joueur.tous_ko():
+                pyxel.text(60 , 50 ,"Defaite", pyxel.COLOR_RED)
 
         if self.etat == "capture_animation":
             # Partie rouge

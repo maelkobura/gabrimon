@@ -78,8 +78,7 @@ aerion = Gabrimon("Aerion", 60, [tornade, coup_daile, rafale, repos])
 psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental,repos])
 drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco, repos])
 
-joueur = Joueur("Sacha", [aquapti, mouskin, voltchu, aerion, rocling, givrin])
+gabriel = Joueur("Gabriel", [aquapti, mouskin, voltchu, aerion, rocling, givrin])
 ennemi = aquapti.copie()
-combat = Combat(joueur,ennemi)
-
+combat = Combat(gabriel,ennemi)
 pyxel.run(update, draw)

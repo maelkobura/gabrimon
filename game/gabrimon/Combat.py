@@ -201,7 +201,6 @@ class Combat:
                 self.gabriball_timer = 0
                 self.etat = "capture_animation"
                 print("Réussi")
-                self.joueur.ajouter_gabrimon(self.ennemi)
 
 
             else:
@@ -260,8 +259,7 @@ class Combat:
             self.timer -= 1
             if self.timer <= 0:
                 import random
-                a = random.randint(1,3)
-                attaque = self.ennemi.attaques[a]
+                attaque = random.choice(self.ennemi.attaques)
                 self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
 
                 if self.joueur.gabrimon_actuel.est_ko():
@@ -385,5 +383,6 @@ class Combat:
             pyxel.circ(self.gabriball_x, self.gabriball_y + 2, 4, 7)
             # Bouton central
             pyxel.circ(self.gabriball_x, self.gabriball_y + 1, 1, 0)
+
 
 

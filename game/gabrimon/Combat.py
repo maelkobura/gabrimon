@@ -56,6 +56,7 @@ class Combat:
         self.texte_combat = ""
         self.timer_texte = 0
         self.bloque_actions = False
+        pyxel.load("../assets/GABRIMON.pyxres")
 
         if joueur.gabrimon_actuel is ennemi:
             raise ValueError("Le Gabrimon ennemi doit être une copie")
@@ -201,7 +202,6 @@ class Combat:
                 self.gabriball_timer = 0
                 self.etat = "capture_animation"
                 print("Réussi")
-                self.joueur.ajouter_gabrimon(self.ennemi)
 
 
             else:
@@ -260,8 +260,7 @@ class Combat:
             self.timer -= 1
             if self.timer <= 0:
                 import random
-                a = random.randint(1,3)
-                attaque = self.ennemi.attaques[a]
+                attaque = random.choice(self.ennemi.attaques)
                 self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
 
                 if self.joueur.gabrimon_actuel.est_ko():
@@ -386,4 +385,32 @@ class Combat:
             # Bouton central
             pyxel.circ(self.gabriball_x, self.gabriball_y + 1, 1, 0)
 
+        g = self.joueur.gabrimon_actuel
+
+        if self.joueur.gabrimon_actuel.nom == "Rocling":
+            colkey_info = 7
+        else:
+            colkey_info = 13
+
+        pyxel.blt(
+            35, 60,  # position écran
+            g.sprite_bank,
+            g.sprite_u,
+            g.sprite_v,
+            g.sprite_w,
+            g.sprite_h,
+            colkey= colkey_info # transparence
+        )
+
+        e = self.ennemi
+
+        pyxel.blt(
+            100, 20,
+            e.sprite_bank,
+            e.sprite_u,
+            e.sprite_v,
+            -e.sprite_w,  # largeur négative = miroir
+            e.sprite_h,
+            colkey=13
+        )
 

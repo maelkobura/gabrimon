@@ -99,6 +99,6 @@ rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral, 
 #drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco, repos])
 
 gabriel = Joueur("Gabriel", [rocling,flamigi,aquapti, mouskin])
-ennemi = aquapti.copie()
+ennemi = flamigi.copie()
 combat = Combat(gabriel,ennemi)
 pyxel.run(update, draw)

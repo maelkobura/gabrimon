@@ -57,6 +57,9 @@ class Combat:
         self.timer_texte = 0
         self.bloque_actions = False
         pyxel.load("../assets/GABRIMON.pyxres")
+        self.capture_phase = 0  # 0 = normal, 1 = aspiration, 2 = disparu
+        self.capture_scale = 1.0  # taille du sprite ennemi
+        self.ennemi_visible = True
 
         if joueur.gabrimon_actuel is ennemi:
             raise ValueError("Le Gabrimon ennemi doit être une copie")
@@ -80,6 +83,10 @@ class Combat:
 
         lignes.append(ligne)
         return lignes
+
+    def reset_capture_animation(self):
+        self.capture_phase = 0
+        self.capture_scale = 1.0
 
     def update(self):
 
@@ -196,21 +203,33 @@ class Combat:
 
             if random.random() < taux:
                 self.capture_reussie = True
-                #capture réussie
                 self.gabriball_x = 120
                 self.gabriball_y = 70
                 self.gabriball_timer = 0
+
+                # ✅ INIT UNE SEULE FOIS
+                self.capture_phase = 1
+                self.capture_scale = 1.0
+
                 self.etat = "capture_animation"
+
                 print("Réussi")
 
 
             else:
                 #échec
+                self.capture_reussie = False
                 self.gabriball_x = 120
                 self.gabriball_y = 70
                 self.gabriball_timer = 0
+
+                # ✅ INIT UNE SEULE FOIS
+                self.capture_phase = 1
+                self.capture_scale = 1.0
+
                 self.etat = "capture_animation"
-                self.capture_reussie = False
+
+
 
                 print("Échec")
 
@@ -223,8 +242,10 @@ class Combat:
 
             # Phase 2 : elle tremble
             elif self.gabriball_timer < 90:
+                self.ennemi_visible = False
                 if self.gabriball_timer % 10 < 5:
                     self.gabriball_x += 1
+
                 else:
                     self.gabriball_x -= 1
             elif self.gabriball_timer == 100:
@@ -235,6 +256,8 @@ class Combat:
                     return
                 else:
                     self.afficher_texte("La capture a echouee ...", 60)
+                    self.ennemi_visible = True
+
                     self.timer = 30
                     self.etat = "animation"
                     self.tour = "ennemi"
@@ -387,7 +410,7 @@ class Combat:
 
         g = self.joueur.gabrimon_actuel
 
-        if self.joueur.gabrimon_actuel.nom == "Rocling":
+        if g.nom == "Rocling":
             colkey_info = 7
         else:
             colkey_info = 13
@@ -403,14 +426,49 @@ class Combat:
         )
 
         e = self.ennemi
+        if e.nom == "Rocling":
+            colkey_ennemi = 7
+        else:
+            colkey_ennemi = 13
 
-        pyxel.blt(
-            100, 20,
-            e.sprite_bank,
-            e.sprite_u,
-            e.sprite_v,
-            -e.sprite_w,  # largeur négative = miroir
-            e.sprite_h,
-            colkey=13
-        )
+        TAILLE_SPRITE = 31
+        X_ENNEMI = 90
+        Y_ENNEMI = 30
+
+        if self.etat == "capture_animation" and self.capture_phase == 1:
+            # réduction progressive
+            self.capture_scale -= 0.025
+
+            if self.capture_scale <= 0:
+                self.capture_scale = 0
+                self.capture_phase = 2
+
+            taille = int(TAILLE_SPRITE * self.capture_scale)
+
+            if taille > 0 and pyxel.frame_count % 4 < 2:  # clignotement
+                pyxel.blt(
+                    X_ENNEMI + (TAILLE_SPRITE - taille) // 2,
+                    Y_ENNEMI + (TAILLE_SPRITE - taille) // 2,
+                    0,
+                    self.ennemi.sprite_u,
+                    self.ennemi.sprite_v,
+                    taille,
+                    taille,
+                    colkey = colkey_ennemi
+                )
+
+        elif self.ennemi_visible:
+            # affichage normal
+            e = self.ennemi
+
+            pyxel.blt(
+                X_ENNEMI, Y_ENNEMI,
+                e.sprite_bank,
+                e.sprite_u,
+                e.sprite_v,
+                -e.sprite_w,  # largeur négative = miroir
+                e.sprite_h,
+                colkey=colkey_ennemi
+            )
+
 

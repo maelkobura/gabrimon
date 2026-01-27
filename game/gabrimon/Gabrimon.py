@@ -1,5 +1,9 @@
 class Gabrimon:
-    def __init__(self, nom, pv_max, attaques, niveau=1 ):
+    def __init__(self, nom, pv_max, attaques,type , niveau=1, sprite_bank=0,
+        sprite_u=208,
+        sprite_v=0,
+        sprite_w=31,
+        sprite_h=31 ):
         self.nom = nom
         self.niveau = niveau
 
@@ -10,6 +14,14 @@ class Gabrimon:
         self.pv_max = pv_max
         self.pv = pv_max
         self.attaques = attaques
+
+        # 🎨 SPRITE
+        self.sprite_bank = sprite_bank
+        self.sprite_u = sprite_u  # position dans l’image
+        self.sprite_v = sprite_v
+        self.sprite_w = sprite_w
+        self.sprite_h = sprite_h
+
 
     def utiliser_capacite(self, capacite, cible):
         if capacite.type_action == "degats":

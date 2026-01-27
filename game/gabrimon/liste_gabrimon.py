@@ -12,7 +12,23 @@ def update():
 def draw():
     combat.draw()
 
+
+
 pyxel.init(160, 120, title="Pokemon Combat")
+
+
+def creer_gabrimon(nom,pv, attaques, type,u, v):
+    return Gabrimon(
+        nom=nom,
+        pv_max=pv,
+        attaques=attaques,
+        type=type,
+        sprite_bank=0,
+        sprite_u=u,
+        sprite_v=v,
+        sprite_w=31,
+        sprite_h=31
+    )
 
 
 repos = Attaque ("Repos" , 5, "soin")
@@ -67,18 +83,22 @@ griffe_dragon = Attaque("Griffe dragon", 35,"degats")
 rugissement = Attaque("Rugissement", 20,"degats")
 flamme_draco = Attaque("Flamme draco", 50,"degats")
 
-flamigi = Gabrimon("Flamigi", 60, [etincelle,griffes_chaudes,souffle_brulant, repos])
-mouskin = Gabrimon("Mouskin", 70, [fouet_liane,pollen_soin,jet_deau, repos])
-aquapti = Gabrimon("Aquapti", 65, [jet_deau,vague_rapide,bulle_percutante, repos])
-voltchu = Gabrimon("Voltchu", 55 , [etincoup, eclair, vitesse_foudre, repos])
-rocling = Gabrimon("Rocling", 90, [jet_de_pierre, ecrasement, mur_mineral, repos])
-noctyra = Gabrimon("Noctyra" , 60, [regard_noir, ombre_vive, morsure_nuit,repos])
-givrin = Gabrimon("Givrin", 65, [souffle_brulant, pic_de_glace, gel_total , repos])
-aerion = Gabrimon("Aerion", 60, [tornade, coup_daile, rafale, repos])
-psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental,repos])
-drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco, repos])
+flamigi = creer_gabrimon("Flamigi", 60,[etincelle,griffes_chaudes,souffle_brulant, repos],"Feu", 144 , 0)
+aquapti = creer_gabrimon("Aquapti",65, [jet_deau,vague_rapide,bulle_percutante, repos],"Eau", 208, 0)
+mouskin = creer_gabrimon("Mouskin", 70,[fouet_liane,pollen_soin,jet_deau, repos],"Plante", 176 , 0 )
+rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral, repos],"Roche",208, 64)
+#flamigi = Gabrimon("Flamigi", 60, [etincelle,griffes_chaudes,souffle_brulant, repos])
+#mouskin = Gabrimon("Mouskin", 70, [fouet_liane,pollen_soin,jet_deau, repos])
+#aquapti = Gabrimon("Aquapti", 65, [jet_deau,vague_rapide,bulle_percutante, repos])
+#voltchu = Gabrimon("Voltchu", 55 , [etincoup, eclair, vitesse_foudre, repos])
+#rocling = Gabrimon("Rocling", 90, [jet_de_pierre, ecrasement, mur_mineral, repos])
+#noctyra = Gabrimon("Noctyra" , 60, [regard_noir, ombre_vive, morsure_nuit,repos])
+#givrin = Gabrimon("Givrin", 65, [souffle_brulant, pic_de_glace, gel_total , repos])
+#aerion = Gabrimon("Aerion", 60, [tornade, coup_daile, rafale, repos])
+#psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental,repos])
+#drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco, repos])
 
-gabriel = Joueur("Gabriel", [aquapti, mouskin, voltchu, aerion, rocling, givrin])
+gabriel = Joueur("Gabriel", [rocling,flamigi,aquapti, mouskin])
 ennemi = aquapti.copie()
 combat = Combat(gabriel,ennemi)
 pyxel.run(update, draw)

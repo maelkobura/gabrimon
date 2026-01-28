@@ -65,6 +65,24 @@ class Combat:
         self.sprite_joueur = "normal"
         self.timer_sprite = 0
 
+        # Son attaque
+        pyxel.sound(0).set(
+            notes="c3e3g3",
+            tones="nnn",
+            volumes="777",
+            effects="n",
+            speed=10
+        )
+
+        # Son dégât reçu
+        pyxel.sound(1).set(
+            notes="f2",
+            tones="n",
+            volumes="777",
+            effects="n",
+            speed=5
+        )
+
         if joueur.gabrimon_actuel is ennemi:
             raise ValueError("Le Gabrimon ennemi doit être une copie")
 
@@ -187,9 +205,10 @@ class Combat:
 
                     if capacite.type_action == "degats":
                         self.joueur.gabrimon_actuel.utiliser_capacite(capacite, self.ennemi)
+                        pyxel.play(0, 0)  # son attaque
                         self.afficher_texte(f"{self.joueur.gabrimon_actuel.nom} attaque !",60)
                         self.sprite_joueur = "attaque"
-                        self.timer = 15
+                        self.timer = 30
                         self.etat = "animation_attaque_joueur"
                         self.timer_sprite = 25
 
@@ -206,7 +225,7 @@ class Combat:
                         return
 
                     self.tour = "ennemi"
-                    self.timer = 30
+                    self.timer = 80
                     self.etat = "animation"
 
         #Capture
@@ -322,9 +341,12 @@ class Combat:
                 # 👉 DÉBUT animation attaque ennemi
                 self.sprite_ennemi = "attaque"
                 self.timer_animation_ennemi = 25
-
+                self.afficher_texte(
+                    f"{self.ennemi.nom} sauvage attaque !",
+                    60
+                )
                 self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
-
+                pyxel.play(0, 0)  # son attaque ennemi
                 if self.joueur.gabrimon_actuel.est_ko():
                     self.etat = "choix_gabrimon"
                     self.selection_gabrimon = 0

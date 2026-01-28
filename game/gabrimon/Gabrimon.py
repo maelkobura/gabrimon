@@ -1,9 +1,14 @@
 class Gabrimon:
-    def __init__(self, nom, pv_max, attaques,type , niveau=1, sprite_bank=0,
-        sprite_u=208,
-        sprite_v=0,
+    def __init__(self, nom, pv_max, attaques,type , niveau=1, 
+        sprite_u_normal=0,
+        sprite_v_normal=0,
+        sprite_u_attaque= 0,
+        sprite_v_attaque=0,
         sprite_w=31,
         sprite_h=31 ):
+
+
+        self.type = type
         self.nom = nom
         self.niveau = niveau
 
@@ -16,9 +21,11 @@ class Gabrimon:
         self.attaques = attaques
 
         # 🎨 SPRITE
-        self.sprite_bank = sprite_bank
-        self.sprite_u = sprite_u  # position dans l’image
-        self.sprite_v = sprite_v
+        self.sprite_bank = 0
+        self.sprite_u_normal = sprite_u_normal  # position dans l’image
+        self.sprite_v_normal = sprite_v_normal
+        self.sprite_u_attaque = sprite_u_attaque
+        self.sprite_v_attaque = sprite_v_attaque
         self.sprite_w = sprite_w
         self.sprite_h = sprite_h
 
@@ -55,5 +62,12 @@ class Gabrimon:
             self.nom,
             self.pv_max,
             self.attaques,
-            self.niveau
+            self.niveau,
+            self.sprite_bank ,
+            self.sprite_u_normal ,
+            self.sprite_v_normal ,
+            self.sprite_u_attaque ,
+            self.sprite_v_attaque ,
+            self.sprite_w ,
+            self.sprite_h
         )

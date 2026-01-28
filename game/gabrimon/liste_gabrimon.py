@@ -17,15 +17,16 @@ def draw():
 pyxel.init(160, 120, title="Pokemon Combat")
 
 
-def creer_gabrimon(nom,pv, attaques, type,u, v):
+def creer_gabrimon(nom,pv, attaques, type,u_normal, v_normal, u_attaque, v_attaque):
     return Gabrimon(
         nom=nom,
         pv_max=pv,
         attaques=attaques,
         type=type,
-        sprite_bank=0,
-        sprite_u=u,
-        sprite_v=v,
+        sprite_u_normal=u_normal,
+        sprite_v_normal=v_normal,
+        sprite_u_attaque= u_attaque,
+        sprite_v_attaque= v_attaque,
         sprite_w=31,
         sprite_h=31
     )
@@ -83,10 +84,11 @@ griffe_dragon = Attaque("Griffe dragon", 35,"degats")
 rugissement = Attaque("Rugissement", 20,"degats")
 flamme_draco = Attaque("Flamme draco", 50,"degats")
 
-flamigi = creer_gabrimon("Flamigi", 60,[etincelle,griffes_chaudes,souffle_brulant, repos],"Feu", 144 , 0)
-aquapti = creer_gabrimon("Aquapti",65, [jet_deau,vague_rapide,bulle_percutante, repos],"Eau", 208, 0)
-mouskin = creer_gabrimon("Mouskin", 70,[fouet_liane,pollen_soin,jet_deau, repos],"Plante", 176 , 0 )
-rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral, repos],"Roche",208, 64)
+flamigi = creer_gabrimon("Flamigi", 60,[etincelle,griffes_chaudes,souffle_brulant, repos],"Feu", 144 , 0 ,144, 32)
+
+aquapti = creer_gabrimon("Aquapti",65, [jet_deau,vague_rapide,bulle_percutante, repos],"Eau", 208, 0,208 , 32)
+mouskin = creer_gabrimon("Mouskin", 70,[fouet_liane,pollen_soin,jet_deau, repos],"Plante", 176 , 0, 176 , 32)
+rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral, repos],"Roche",208, 64,208 , 96)
 #flamigi = Gabrimon("Flamigi", 60, [etincelle,griffes_chaudes,souffle_brulant, repos])
 #mouskin = Gabrimon("Mouskin", 70, [fouet_liane,pollen_soin,jet_deau, repos])
 #aquapti = Gabrimon("Aquapti", 65, [jet_deau,vague_rapide,bulle_percutante, repos])

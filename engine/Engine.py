@@ -1,8 +1,10 @@
 ﻿import pyxel
 
+INSTANCE = None
 
 class Engine:
     def __init__(self, nom, gamepath="./", splash_screen=None, splash_screen_size=(32, 32), screen_size=(160, 120), game_class=None):
+        Engine.INSTANCE = self
         self.nom = nom
         self.started = False
         self.gamepath = gamepath

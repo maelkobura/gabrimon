@@ -1,6 +1,7 @@
 import pyxel
 
 from game.personnage.composants.MouvementComponent import MouvementComponent
+from game.personnage.composants.TeleportationComponent import TeleportationComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
 
@@ -12,16 +13,22 @@ class Joueur(Personnage):
         self.speed = 2
         self.register_component("mouvement", MouvementComponent)
         self.register_component("transition", TransitionAnimationComponent)
+        self.register_component("teleportation", TeleportationComponent)
 
         self.x = 1016
         self.y = 396
         self.doorstep = 0
+        self.entering = False
+
+        self.freeze_movement = False
+        self.freeze_interact = False
 
         if CLICK_DEBUG:
             pyxel.mouse(True)
 
 
     def update(self):
+        super().update()
         dx, dy = 0, 0
         if pyxel.btn(pyxel.KEY_LEFT):
             dx = -self.speed
@@ -35,26 +42,24 @@ class Joueur(Personnage):
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x
             y = pyxel.mouse_y
-            print(f"Location : x={x}, y={y}")
+            print(f"Location (UI Space) : x={x}, y={y}")
+        if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            x = pyxel.mouse_x + (self.x - pyxel.width // 2)
+            y = pyxel.mouse_y + (self.y - pyxel.height // 2)
+            print(f"Location (World Space) : x={x}, y={y}")
 
         self.get_component("mouvement").move(dx, dy)
         self.set_state("player_x", self.x)
         self.set_state("player_y", self.y)
 
-        # TODO Faire mieux
+        if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact and self.doorstep != 0:
+            indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)
+            if self.service.engine.get_service("map").current_world == 0:
+                self.get_component("teleportation").teleport(indoor.indoor_pos)
+            else:
+                self.get_component("teleportation").teleport(indoor.outside_pos)
+            self.doorstep=0
 
-        if pyxel.btn(pyxel.KEY_E):
-            if self.doorstep != 0:
-                print("Entering to door", self.doorstep)
-                self.doorstep = 0
-                self.get_component("transition").transition = 1
-
-        if self.get_component("transition").transition == 0:
-            self.teleport(1, 56, 134)
-            self.direction = 1
-            self.get_component("transition").transition = 2
-
-        super().update()
 
     def set_doorstep(self, id):
         self.doorstep = id
@@ -66,4 +71,7 @@ class Joueur(Personnage):
 
     def draw(self):
         pyxel.camera(self.x - pyxel.width // 2, self.y - pyxel.height // 2)
+        if self.doorstep != 0 and self.service.engine.get_service("map").current_world == 0:
+            self.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=64, h=16)
+            self.service.engine.get_service("ui").draw_text(self.service.engine.get_service("indoor").get_indoor(self.doorstep).name, 15, 105, 0)
         super().draw()

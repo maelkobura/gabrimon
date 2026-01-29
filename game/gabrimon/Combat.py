@@ -56,6 +56,32 @@ class Combat:
         self.texte_combat = ""
         self.timer_texte = 0
         self.bloque_actions = False
+        pyxel.load("../assets/GABRIMON.pyxres")
+        self.capture_phase = 0  # 0 = normal, 1 = aspiration, 2 = disparu
+        self.capture_scale = 1.0  # taille du sprite ennemi
+        self.ennemi_visible = True
+        self.sprite_ennemi = "normal"
+        self.timer_animation_ennemi = 0
+        self.sprite_joueur = "normal"
+        self.timer_sprite = 0
+
+        # Son attaque
+        pyxel.sound(0).set(
+            notes="c3e3g3",
+            tones="nnn",
+            volumes="777",
+            effects="n",
+            speed=10
+        )
+
+        # Son dégât reçu
+        pyxel.sound(1).set(
+            notes="f2",
+            tones="n",
+            volumes="777",
+            effects="n",
+            speed=5
+        )
 
         if joueur.gabrimon_actuel is ennemi:
             raise ValueError("Le Gabrimon ennemi doit être une copie")
@@ -80,7 +106,22 @@ class Combat:
         lignes.append(ligne)
         return lignes
 
+    def reset_capture_animation(self):
+        self.capture_phase = 0
+        self.capture_scale = 1.0
+
     def update(self):
+        # Gestion du sprite d'attaque
+        if self.timer_sprite > 0:
+            self.timer_sprite -= 1
+            if self.timer_sprite <= 0:
+                self.sprite_joueur = "normal"
+
+        # Animation attaque ennemi
+        if self.sprite_ennemi == "attaque":
+            self.timer_animation_ennemi -= 1
+            if self.timer_animation_ennemi <= 0:
+                self.sprite_ennemi = "normal"
 
         if self.timer_texte > 0:
             self.timer_texte -= 1
@@ -164,7 +205,13 @@ class Combat:
 
                     if capacite.type_action == "degats":
                         self.joueur.gabrimon_actuel.utiliser_capacite(capacite, self.ennemi)
+                        pyxel.play(0, 0)  # son attaque
                         self.afficher_texte(f"{self.joueur.gabrimon_actuel.nom} attaque !",60)
+                        self.sprite_joueur = "attaque"
+                        self.timer = 30
+                        self.etat = "animation_attaque_joueur"
+                        self.timer_sprite = 25
+
 
                     elif capacite.type_action == "soin":
                         self.joueur.gabrimon_actuel.utiliser_capacite(capacite, None)
@@ -173,11 +220,12 @@ class Combat:
                     if self.ennemi.est_ko():
                         xp_gagnee = 10 * self.ennemi.niveau
                         self.joueur.gabrimon_actuel.gagner_xp(xp_gagnee)
+                        self.ennemi_visible = False
                         self.etat = "fin"
                         return
 
                     self.tour = "ennemi"
-                    self.timer = 30
+                    self.timer = 80
                     self.etat = "animation"
 
         #Capture
@@ -195,22 +243,34 @@ class Combat:
 
             if random.random() < taux:
                 self.capture_reussie = True
-                #capture réussie
                 self.gabriball_x = 120
                 self.gabriball_y = 70
                 self.gabriball_timer = 0
+
+                # ✅ INIT UNE SEULE FOIS
+                self.capture_phase = 1
+                self.capture_scale = 1.0
+
                 self.etat = "capture_animation"
+
                 print("Réussi")
-                self.joueur.ajouter_gabrimon(self.ennemi)
 
 
             else:
                 #échec
+                self.capture_reussie = False
                 self.gabriball_x = 120
                 self.gabriball_y = 70
                 self.gabriball_timer = 0
+
+                # ✅ INIT UNE SEULE FOIS
+                self.capture_phase = 0
+                self.capture_scale = 1.0
+                self.ennemi_visible = True
+
                 self.etat = "capture_animation"
-                self.capture_reussie = False
+
+
 
                 print("Échec")
 
@@ -223,8 +283,10 @@ class Combat:
 
             # Phase 2 : elle tremble
             elif self.gabriball_timer < 90:
+                self.ennemi_visible = False
                 if self.gabriball_timer % 10 < 5:
                     self.gabriball_x += 1
+
                 else:
                     self.gabriball_x -= 1
             elif self.gabriball_timer == 100:
@@ -235,12 +297,25 @@ class Combat:
                     return
                 else:
                     self.afficher_texte("La capture a echouee ...", 60)
+                    self.ennemi_visible = True
+
                     self.timer = 30
                     self.etat = "animation"
                     self.tour = "ennemi"
                     return
 
+        elif self.etat == "animation_attaque_joueur":
+            self.timer -= 1
+            if self.timer <= 0:
+                self.sprite_joueur = "normal"
+                self.tour = "ennemi"
+                self.etat = "animation"
 
+        elif self.etat == "capture_animation" and self.capture_phase == 1:
+            self.capture_scale -= 0.025
+            if self.capture_scale <= 0:
+                self.capture_scale = 0
+                self.capture_phase = 2  # aspiration terminée
 
 
 
@@ -258,12 +333,20 @@ class Combat:
         # Tour de l'ennemi
         elif self.etat == "animation" and self.tour == "ennemi":
             self.timer -= 1
+
             if self.timer <= 0:
                 import random
-                a = random.randint(1,3)
-                attaque = self.ennemi.attaques[a]
-                self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
+                attaque = random.choice(self.ennemi.attaques)
 
+                # 👉 DÉBUT animation attaque ennemi
+                self.sprite_ennemi = "attaque"
+                self.timer_animation_ennemi = 25
+                self.afficher_texte(
+                    f"{self.ennemi.nom} sauvage attaque !",
+                    60
+                )
+                self.ennemi.utiliser_capacite(attaque, self.joueur.gabrimon_actuel)
+                pyxel.play(0, 0)  # son attaque ennemi
                 if self.joueur.gabrimon_actuel.est_ko():
                     self.etat = "choix_gabrimon"
                     self.selection_gabrimon = 0
@@ -385,5 +468,77 @@ class Combat:
             pyxel.circ(self.gabriball_x, self.gabriball_y + 2, 4, 7)
             # Bouton central
             pyxel.circ(self.gabriball_x, self.gabriball_y + 1, 1, 0)
+
+        g = self.joueur.gabrimon_actuel
+
+        if g.nom == "Rocling":
+            colkey_info = 7
+        else:
+            colkey_info = 13
+
+
+
+        e = self.ennemi
+        if e.nom == "Rocling":
+            colkey_ennemi = 7
+        else:
+            colkey_ennemi = 13
+
+        TAILLE_SPRITE = 31
+        X_ENNEMI = 100
+        Y_ENNEMI = 25
+
+        # ===== AFFICHAGE GABRIMON ENNEMI =====
+        e = self.ennemi
+
+        if self.etat == "capture_animation" and self.capture_phase == 1:
+            taille = int(31 * self.capture_scale)
+
+            if taille > 0:
+                pyxel.blt(
+                    X_ENNEMI + (31 - taille) // 2,
+                    Y_ENNEMI + (31 - taille) // 2,
+                    0,
+                    e.sprite_u_normal,
+                    e.sprite_v_normal,
+                    taille,
+                    taille,
+                    colkey=colkey_ennemi
+                )
+
+
+        elif self.ennemi_visible:
+            # normal ou attaque
+            if self.sprite_ennemi == "attaque":
+                u, v = e.sprite_u_attaque, e.sprite_v_attaque
+            else:
+                u, v = e.sprite_u_normal, e.sprite_v_normal
+
+            pyxel.blt(
+                X_ENNEMI, Y_ENNEMI,
+                0,
+                u, v,
+                -31,
+                31,
+                colkey=colkey_ennemi
+            )
+
+        if self.sprite_joueur == "attaque":
+            x = 42
+            u, v = g.sprite_u_attaque , g.sprite_v_attaque
+        else:
+            x= 35
+            u , v = g.sprite_u_normal , g.sprite_v_normal
+
+        pyxel.blt(
+            x, 60,
+            0,
+            u, v,
+            g.sprite_w,
+            g.sprite_h,
+            colkey=colkey_info
+        )
+
+
 
 

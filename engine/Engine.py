@@ -42,6 +42,9 @@ class Engine:
     def load(self, file):
         return pyxel.load(self.gamepath + file)
 
+    def get_absolute_path(self, file):
+        return self.gamepath + file
+
     def update(self):
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()

@@ -1,2 +1,2 @@
-cd ./assets/game
+cd ./game/assets
 pyxel edit ./GABRIMON.pyxres

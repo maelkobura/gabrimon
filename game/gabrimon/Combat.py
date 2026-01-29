@@ -358,6 +358,7 @@ class Combat:
 
     def draw(self):
         pyxel.cls(0)
+        pyxel.load("../assets/arriere_plan_combat.png")
 
 
         #Affichage pv en forme de barre

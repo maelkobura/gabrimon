@@ -34,15 +34,21 @@ class GabrimonService(Service):
                 data = json.load(json_file)
                 id = data["id"]
                 name = data["nom_affichage"]
-                # TODO: Type, min_level, max_level
+                # TODO: min_level, max_level
+                types = data["type"]
                 pv_max = data["pv"]
+                image_bank = data["sprite"]["id"]
+                image_u = data["sprite"]["u"]
+                image_v = data["sprite"]["v"]
+                image_w = data["sprite"]["w"]
+                image_h = data["sprite"]["h"]
                 atta = []
                 for i in data["attaques"]:
                     if i in attaques:
                         atta.append(attaques[i])
                     else:
                         print("[" + id + "] Attaque '" + i + "' introuvable")
-                gabrimons[id] = Gabrimon(name,pv_max,atta)
+                gabrimons[id] = Gabrimon(name,pv_max,atta,types,image_bank,image_u,image_v,image_w,image_h)
                 print("Gabrimon '" + id + "' chargé")
             print(len(gabrimons), "gabrimons chargés")
 

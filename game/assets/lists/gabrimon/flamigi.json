@@ -7,5 +7,12 @@
   "max_level": 100,
   "attaques": [
     "etincelle"
-  ]
+  ],
+  "sprite":{
+    "id": 0,
+    "u": 144,
+    "v": 0,
+    "w": 31,
+    "h": 31
+  }
 }

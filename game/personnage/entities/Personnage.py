@@ -16,10 +16,15 @@ class Personnage(Entity):
 
         self.sheet_index = 0
         self.sprite_index = 0
-        self.animation_index = 0
+        self.idle_sprite_index = 0
         self.animation_speed = 0.1
+        self.idle_animation_speed = 0.5
+
+        self.moving_animation_index = 0
+        self.idle_animation_index = 0
 
         self.frame_counter = 0
+        self.is_moving = False
 
     def update(self):
         self.frame_counter += 1
@@ -34,12 +39,32 @@ class Personnage(Entity):
         elif self.direction == 4:
             self.sprite_index = 12
 
-        if self.frame_counter >= 30*self.animation_speed:
+        speed = self.idle_animation_speed
+
+        if self.is_moving:
+            self.idle_sprite_index = self.sprite_index/2
+            speed = self.animation_speed
+
+
+        if self.frame_counter >= 30*speed:
             self.frame_counter = 0
-            self.animation_index += 1
-            if self.animation_index > 3:
-                self.animation_index = 0
+            if self.is_moving:
+                self.moving_animation_index += 1
+                if self.moving_animation_index > 3:
+                    self.moving_animation_index = 0
+            else:
+                self.idle_animation_index += 1
+                if self.idle_animation_index > 1:
+                    self.idle_animation_index = 0
 
     def draw(self):
-        pyxel.blt(self.x, self.y, 1, (self.sprite_index + self.animation_index)*16, self.sheet_index*16, self.taille_x, self.taille_y, colkey=13)
+        index = self.sheet_index
+        anim = self.moving_animation_index
+        sprite = self.sprite_index
+        if not self.is_moving:
+            index+=1
+            anim = self.idle_animation_index
+            sprite = self.idle_sprite_index
+        print(anim)
+        pyxel.blt(self.x, self.y, 1, (sprite + anim)*16, index*16, self.taille_x, self.taille_y, colkey=13)
         super().draw()

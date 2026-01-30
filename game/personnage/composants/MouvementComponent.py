@@ -13,6 +13,11 @@ class MouvementComponent(Component):
         if self.entity.service.engine.get_service("terrain").can_i(self.entity.x, self.entity.y+dy, self.entity.taille_x, self.entity.taille_y):
             self.entity.y += dy*speed
 
+        if dx+dy==0:
+            self.entity.is_moving = False
+        else:
+            self.entity.is_moving = True
+
         if dx < 0:
             self.entity.direction = 4
         elif dx > 0:

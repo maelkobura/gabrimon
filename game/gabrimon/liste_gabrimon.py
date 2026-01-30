@@ -85,7 +85,6 @@ rugissement = Attaque("Rugissement", 20,"degats")
 flamme_draco = Attaque("Flamme draco", 50,"degats")
 
 flamigi = creer_gabrimon("Flamigi", 60,[etincelle,griffes_chaudes,souffle_brulant],"Feu", 144 , 0 ,144, 32)
-
 aquapti = creer_gabrimon("Aquapti",65, [jet_deau,vague_rapide,bulle_percutante],"Eau", 208, 0,208 , 32)
 mouskin = creer_gabrimon("Mouskin", 70,[fouet_liane,pollen_soin,charge_verte],"Plante", 176 , 0, 176 , 32)
 rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral],"Roche",208, 64,208 , 96)

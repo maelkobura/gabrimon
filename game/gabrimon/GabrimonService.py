@@ -38,8 +38,10 @@ class GabrimonService(Service):
                 types = data["type"]
                 pv_max = data["pv"]
                 image_bank = data["sprite"]["id"]
-                image_u = data["sprite"]["u"]
-                image_v = data["sprite"]["v"]
+                image_u = data["sprite"]["idle"]["u"]
+                image_v = data["sprite"]["idle"]["v"]
+                image_attack_u = data["sprite"]["attack"]["u"]
+                image_attack_v = data["sprite"]["attack"]["v"]
                 image_w = data["sprite"]["w"]
                 image_h = data["sprite"]["h"]
                 atta = []
@@ -48,7 +50,7 @@ class GabrimonService(Service):
                         atta.append(attaques[i])
                     else:
                         print("[" + id + "] Attaque '" + i + "' introuvable")
-                gabrimons[id] = Gabrimon(name,pv_max,atta,types,image_bank,image_u,image_v,image_w,image_h)
+                gabrimons[id] = Gabrimon(name,pv_max,atta,types,image_bank,image_u,image_v,image_attack_u,image_attack_v,image_w,image_h)
                 print("Gabrimon '" + id + "' chargé")
             print(len(gabrimons), "gabrimons chargés")
 

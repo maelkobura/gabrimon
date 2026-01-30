@@ -5,7 +5,7 @@ class GestionGabrimonComponent(Component):
     def __init__(self, entity):
         super().__init__(entity)
         self.equipe = []  # liste d'objets Pokemon
-        self.pokemon_actuel = None # Pokémon en combat
+        self.gabrimon_actuel = None # Pokémon en combat
         self.pc = []  # boite PC
         self.equipe_max = 6
 

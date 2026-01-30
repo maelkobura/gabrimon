@@ -22,6 +22,8 @@ class Joueur(Personnage):
         self.register_component("teleportation", TeleportationComponent)
         self.register_component("gabrimon", GestionGabrimonComponent)
         self.get_component("gabrimon").equipe = [rocling,flamigi,aquapti, mouskin]
+        self.get_component("gabrimon").gabrimon_actuel = self.get_component("gabrimon").equipe[0]
+
         self.nom = "Raphanathanael"
 
         self.x = 1016
@@ -52,7 +54,7 @@ class Joueur(Personnage):
 
         if pyxel.btnp(pyxel.KEY_U):
             print("LANCEMENT D'UN COMBAT")
-            ennemi= random.choice(liste_gabrimon).copie
+            ennemi= random.choice(liste_gabrimon).copie()
             self.combat = Combat(self , ennemi)
 
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):

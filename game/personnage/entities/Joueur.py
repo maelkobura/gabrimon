@@ -1,9 +1,15 @@
+import random
+
 import pyxel
 
+from game.gabrimon.Combat import Combat
+from game.gabrimon.Joueur import Joueur
+from game.personnage.composants.GestionGabrimonComponent import GestionGabrimonComponent
 from game.personnage.composants.MouvementComponent import MouvementComponent
 from game.personnage.composants.TeleportationComponent import TeleportationComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
+from game.gabrimon.liste_gabrimon import liste_gabrimon, gabriel, rocling, flamigi, aquapti, mouskin
 
 CLICK_DEBUG = True
 
@@ -14,6 +20,9 @@ class Joueur(Personnage):
         self.register_component("mouvement", MouvementComponent)
         self.register_component("transition", TransitionAnimationComponent)
         self.register_component("teleportation", TeleportationComponent)
+        self.register_component("gabrimon", GestionGabrimonComponent)
+        self.get_component("gabrimon").equipe = [rocling,flamigi,aquapti, mouskin]
+        self.nom = "Raphanathanael"
 
         self.x = 1016
         self.y = 396
@@ -22,6 +31,8 @@ class Joueur(Personnage):
 
         self.freeze_movement = False
         self.freeze_interact = False
+
+        self.combat = None
 
         if CLICK_DEBUG:
             pyxel.mouse(True)
@@ -41,6 +52,8 @@ class Joueur(Personnage):
 
         if pyxel.btnp(pyxel.KEY_U):
             print("LANCEMENT D'UN COMBAT")
+            ennemi= random.choice(liste_gabrimon).copie
+            self.combat = Combat(self , ennemi)
 
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x
@@ -73,6 +86,8 @@ class Joueur(Personnage):
         self.service.engine.get_service("map").set_world(world)
 
     def draw(self):
+        if not self.combat is None:
+            self.combat.draw()
         pyxel.camera(self.x - pyxel.width // 2, self.y - pyxel.height // 2)
         if self.doorstep != 0 and self.service.engine.get_service("map").current_world == 0:
             self.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=64, h=16)

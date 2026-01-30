@@ -1,6 +1,5 @@
 import pyxel
 
-from Joueur import Joueur
 
 def dessiner_barre_pv(x, y, largeur, hauteur, pv, pv_max):
     # Cadre
@@ -27,12 +26,12 @@ def dessiner_barre_pv(x, y, largeur, hauteur, pv, pv_max):
 
 
 class Combat:
-    def __init__(self, joueur: Joueur, ennemi):
+    def __init__(self, joueur, ennemi):
         self.joueur = joueur
         self.ennemi = ennemi
 
         #gabrimon actif
-        self.joueur.gabrimon_actuel = self.joueur.equipe[0]
+        self.joueur.gabrimon_actuel = self.joueur.get_component("gabrimon").equipe[0]
 
         self.tour = "joueur"
         self.attaque_selectionnee = 0
@@ -56,7 +55,6 @@ class Combat:
         self.texte_combat = ""
         self.timer_texte = 0
         self.bloque_actions = False
-        pyxel.load("../assets/GABRIMON.pyxres")
         self.capture_phase = 0  # 0 = normal, 1 = aspiration, 2 = disparu
         self.capture_scale = 1.0  # taille du sprite ennemi
         self.ennemi_visible = True
@@ -83,7 +81,7 @@ class Combat:
             speed=5
         )
 
-        if joueur.gabrimon_actuel is ennemi:
+        if joueur.get_component("gabrimon").gabrimon_actuel is ennemi:
             raise ValueError("Le Gabrimon ennemi doit être une copie")
 
     def afficher_texte(self, texte, duree=90):
@@ -171,7 +169,7 @@ class Combat:
         # Menu de choix Gabrimon
         elif self.etat == "choix_gabrimon":
             #Vérifier si tous les Gabrimon du joueur sont KO
-            if self.joueur.tous_ko():
+            if self.joueur.get_component("gabrimon").tous_ko():
                 self.etat = "fin"
                 return  # fin du combat, défaite automatique
 
@@ -183,15 +181,15 @@ class Combat:
             if pyxel.btnp(pyxel.KEY_BACKSPACE):
                 self.etat = "choix_action"
             if pyxel.btnp(pyxel.KEY_RETURN):
-                g = self.joueur.equipe[self.selection_gabrimon]
+                g = self.joueur.get_component("gabrimon").equipe[self.selection_gabrimon]
                 if not g.est_ko():
-                    self.joueur.gabrimon_actuel = g
+                    self.joueur.get_component("gabrimon").gabrimon_actuel = g
                     self.etat = "choix_action"  # Retour menu principle
 
         # Menu des attaques
         elif self.etat == "attaque" and self.tour == "joueur":
 
-            attaques = self.joueur.gabrimon_actuel.attaques
+            attaques = self.joueur.get_component("gabrimon").gabrimon_actuel.attaques
 
             if pyxel.btnp(pyxel.KEY_UP):
                 self.attaque_selectionnee = (self.attaque_selectionnee - 1) % len(self.joueur.gabrimon_actuel.attaques)
@@ -204,9 +202,9 @@ class Combat:
                     capacite = attaques[self.attaque_selectionnee]
 
                     if capacite.type_action == "degats":
-                        self.joueur.gabrimon_actuel.utiliser_capacite(capacite, self.ennemi)
+                        self.joueur.get_component("gabrimon").gabrimon_actuel.utiliser_capacite(capacite, self.ennemi)
                         pyxel.play(0, 0)  # son attaque
-                        self.afficher_texte(f"{self.joueur.gabrimon_actuel.nom} attaque !",60)
+                        self.afficher_texte(f"{self.joueur.get_component("gabrimon").gabrimon_actuel.nom} attaque !",60)
                         self.sprite_joueur = "attaque"
                         self.timer = 30
                         self.etat = "animation_attaque_joueur"
@@ -215,11 +213,11 @@ class Combat:
 
                     elif capacite.type_action == "soin":
                         self.joueur.gabrimon_actuel.utiliser_capacite(capacite, None)
-                        self.afficher_texte(f"{self.joueur.gabrimon_actuel.nom} attaque !",60)
+                        self.afficher_texte(f"{self.joueur.get_component("gabrimon").gabrimon_actuel.nom} attaque !",60)
 
                     if self.ennemi.est_ko():
                         xp_gagnee = 10 * self.ennemi.niveau
-                        self.joueur.gabrimon_actuel.gagner_xp(xp_gagnee)
+                        self.joueur.get_component("gabrimon").gabrimon_actuel.gagner_xp(xp_gagnee)
                         self.ennemi_visible = False
                         self.etat = "fin"
                         return
@@ -292,7 +290,7 @@ class Combat:
             elif self.gabriball_timer == 100:
                 if self.capture_reussie:
                     self.afficher_texte("Gabrimon capture !", 60 )
-                    self.joueur.ajouter_gabrimon(self.ennemi)
+                    self.joueur.get_component("gabrimon").ajouter_gabrimon(self.ennemi)
                     self.etat = "fin"
                     return
                 else:
@@ -365,15 +363,15 @@ class Combat:
         #Affichage pv en forme de barre
             # Gabrimon du joueur
 
-        pyxel.text(90, 70, self.joueur.gabrimon_actuel.nom, 0)
+        pyxel.text(90, 70, self.joueur.nom, 0)
 
         dessiner_barre_pv(
             x=90,
             y=80,
             largeur=60,
             hauteur=6,
-            pv=self.joueur.gabrimon_actuel.pv,
-            pv_max=self.joueur.gabrimon_actuel.pv_max
+            pv=self.joueur.get_component("gabrimon").gabrimon_actuel.pv,
+            pv_max=self.joueur.get_component("gabrimon").gabrimon_actuel.pv_max
         )
 
         # Gabrimon ennemi
@@ -474,7 +472,7 @@ class Combat:
             # Bouton central
             pyxel.circ(self.gabriball_x, self.gabriball_y + 1, 1, 0)
 
-        g = self.joueur.gabrimon_actuel
+        g = self.joueur.get_component("gabrimon").gabrimon_actuel
 
         if g.nom == "Rocling":
             colkey_info = 7

@@ -1,10 +1,12 @@
 # Pyxel Studio
 
 import pyxel
-from Attaque import Attaque
-from Gabrimon import Gabrimon
-from Combat import Combat
-from Joueur import Joueur
+
+from game.gabrimon.Attaque import Attaque
+from game.gabrimon.Combat import Combat
+from game.gabrimon.Gabrimon import Gabrimon
+from game.gabrimon.Joueur import Joueur
+
 
 def update():
     combat.update()
@@ -14,7 +16,6 @@ def draw():
 
 
 
-pyxel.init(160, 120, title="Pokemon Combat")
 
 
 def creer_gabrimon(nom,pv, attaques, type,u_normal, v_normal, u_attaque, v_attaque):
@@ -88,7 +89,7 @@ flamigi = creer_gabrimon("Flamigi", 60,[etincelle,griffes_chaudes,souffle_brulan
 aquapti = creer_gabrimon("Aquapti",65, [jet_deau,vague_rapide,bulle_percutante],"Eau", 208, 0,208 , 32)
 mouskin = creer_gabrimon("Mouskin", 70,[fouet_liane,pollen_soin,charge_verte],"Plante", 176 , 0, 176 , 32)
 rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral],"Roche",208, 64,208 , 96)
-#flamigi = Gabrimon("Flamigi", 60, [etincelle,griffes_chaudes,souffle_brulant])
+#flamigi = Gabrimon("Flamigi", 60, [etincelle,griffes_chaudes,souffle_brulant]
 #mouskin = Gabrimon("Mouskin", 70, [fouet_liane,pollen_soin,jet_deau])
 #aquapti = Gabrimon("Aquapti", 65, [jet_deau,vague_rapide,bulle_percutante])
 #voltchu = Gabrimon("Voltchu", 55 , [etincoup, eclair, vitesse_foudre])
@@ -98,8 +99,8 @@ rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral],
 #aerion = Gabrimon("Aerion", 60, [tornade, coup_daile, rafale])
 #psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental])
 #drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco])
-
+liste_gabrimon = [flamigi,aquapti,mouskin,rocling]
 gabriel = Joueur("Gabriel", [rocling,flamigi,aquapti, mouskin])
-ennemi = flamigi.copie()
-combat = Combat(gabriel,ennemi)
-pyxel.run(update, draw)
+#ennemi = flamigi.copie()
+#combat = Combat(gabriel,ennemi)
+#pyxel.run(update, draw)

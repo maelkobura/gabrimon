@@ -39,6 +39,9 @@ class Joueur(Personnage):
         elif pyxel.btn(pyxel.KEY_DOWN):
             dy = self.speed
 
+        if pyxel.btnp(pyxel.KEY_U):
+            print("LANCEMENT D'UN COMBAT")
+
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x
             y = pyxel.mouse_y

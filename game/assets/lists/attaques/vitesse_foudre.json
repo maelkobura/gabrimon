@@ -1,4 +1,5 @@
 {
+    "id": "vitesse_foudre",
     "nom": "Vitesse foudre",
     "valeur": 30,
     "type_action": "degats"

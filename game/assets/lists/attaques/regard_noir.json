@@ -1,4 +1,5 @@
 {
+    "id": "regard_noir",
     "nom": "Regard Noir",
     "valeur": 20,
     "type_action": "degats"

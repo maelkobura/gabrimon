@@ -1,4 +1,5 @@
 {
+    "id": "souffle_froid",
     "nom": "Souffle froid",
     "valeur": 25,
     "type_action": "degats"

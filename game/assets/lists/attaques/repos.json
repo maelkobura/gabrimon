@@ -1,4 +1,5 @@
 {
+    "id": "repos",
     "nom": "Repos",
     "valeur": 5,
     "type_action": "soin"

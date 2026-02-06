@@ -17,14 +17,18 @@ class GabrimonService(Service):
         print("Chargement des Attaques...")
         attaques_files = list(Path(self.engine.get_absolute_path(ATTAQUES_PATH)).glob("*.json"))
         for f in attaques_files:
-            with open(f) as json_file:
-                data = json.load(json_file)
-                id = data["id"]
-                name = data["name"]
-                type = data["type"]
-                damage = data["damage"]
-                attaques[id] = Attaque(name,damage,type)
-                print("Attaque '" + id + "' chargé")
+            try:
+                with open(f) as json_file:
+                    data = json.load(json_file)
+                    id = data["id"]
+                    name = data["nom"]
+                    type = data["type_action"]
+                    damage = data["valeur"]
+                    attaques[id] = Attaque(name, damage, type)
+                    print("Attaque '" + id + "' chargé")
+            except Exception as e:
+                print("[ERREUR] Chargement de",f.name,"|",e)
+
         print(len(attaques), "attaques chargés")
 
         print("Chargement des Gabrimons...")
@@ -52,7 +56,7 @@ class GabrimonService(Service):
                         print("[" + id + "] Attaque '" + i + "' introuvable")
                 gabrimons[id] = Gabrimon(name,pv_max,atta,types,image_bank,image_u,image_v,image_attack_u,image_attack_v,image_w,image_h)
                 print("Gabrimon '" + id + "' chargé")
-            print(len(gabrimons), "gabrimons chargés")
+        print(len(gabrimons), "gabrimons chargés")
 
 
 

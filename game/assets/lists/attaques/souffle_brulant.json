@@ -1,4 +1,5 @@
 {
+    "id": "souffle_brulant",
     "nom": "Souffle Brulant",
     "valeur": 40,
     "type_action": "degats"

@@ -1,4 +1,5 @@
 {
+    "id": "onde_psy",
     "nom": "Onde psy",
     "valeur": 40,
     "type_action": "degats"

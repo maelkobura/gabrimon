@@ -1,4 +1,5 @@
 {
+    "id": "eclair",
     "nom": "Eclair",
     "valeur": 40,
     "type_action": "degats"

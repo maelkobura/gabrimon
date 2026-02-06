@@ -1,4 +1,5 @@
 {
+    "id": "bulle_percutante",
     "nom": "Bulle Percutante",
     "valeur": 30,
     "type_action": "degats"

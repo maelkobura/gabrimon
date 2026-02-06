@@ -34,13 +34,12 @@ class Joueur(Personnage):
         self.freeze_movement = False
         self.freeze_interact = False
 
-        self.combat = None
-
         if CLICK_DEBUG:
             pyxel.mouse(True)
 
 
     def update(self):
+        if self.service.engine.get_service("combat").is_combat(): return
         super().update()
         dx, dy = 0, 0
         if pyxel.btn(pyxel.KEY_LEFT):
@@ -55,7 +54,7 @@ class Joueur(Personnage):
         if pyxel.btnp(pyxel.KEY_U):
             print("LANCEMENT D'UN COMBAT")
             ennemi= random.choice(liste_gabrimon).copie()
-            self.combat = Combat(self , ennemi)
+            self.service.engine.get_service("combat").start_combat(self, ennemi)
 
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x
@@ -88,8 +87,7 @@ class Joueur(Personnage):
         self.service.engine.get_service("map").set_world(world)
 
     def draw(self):
-        if not self.combat is None:
-            self.combat.draw()
+        if self.service.engine.get_service("combat").is_combat(): return
         pyxel.camera(self.x - pyxel.width // 2, self.y - pyxel.height // 2)
         if self.doorstep != 0 and self.service.engine.get_service("map").current_world == 0:
             self.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=64, h=16)

@@ -65,6 +65,5 @@ class Personnage(Entity):
             index+=1
             anim = self.idle_animation_index
             sprite = self.idle_sprite_index
-        print(anim)
         pyxel.blt(self.x, self.y, 1, (sprite + anim)*16, index*16, self.taille_x, self.taille_y, colkey=13)
         super().draw()

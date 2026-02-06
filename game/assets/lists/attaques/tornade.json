@@ -1,0 +1,6 @@
+{
+    "id": "tornade",
+    "nom": "Tornade",
+    "valeur": 30,
+    "type_action": "degats"
+}

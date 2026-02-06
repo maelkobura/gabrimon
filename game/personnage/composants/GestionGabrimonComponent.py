@@ -4,7 +4,14 @@ from engine.entity.Component import Component
 class GestionGabrimonComponent(Component):
     def __init__(self, entity):
         super().__init__(entity)
-        self.equipe = []  # liste d'objets Pokemon
+        self.equipe = [
+            entity.service.engine.get_service("gabrimon").get_random_gabrimon(),
+            entity.service.engine.get_service("gabrimon").get_random_gabrimon(),
+            entity.service.engine.get_service("gabrimon").get_random_gabrimon(),
+            entity.service.engine.get_service("gabrimon").get_random_gabrimon(),
+            entity.service.engine.get_service("gabrimon").get_random_gabrimon(),
+            entity.service.engine.get_service("gabrimon").get_random_gabrimon()
+        ]  # liste d'objets Pokemon
         self.gabrimon_actuel = None # Pokémon en combat
         self.pc = []  # boite PC
         self.equipe_max = 6

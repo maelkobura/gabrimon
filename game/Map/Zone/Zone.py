@@ -3,7 +3,7 @@ import pyxel
 
 from game.Map.Zone.ZoneEvent import ZoneEvent
 
-ENABLE_DEBUG = False
+ENABLE_DEBUG = True
 
 class Zone(Entity):
     def __init__(self, service,x,y,w,h,events=ZoneEvent(),world=0):

@@ -1,0 +1,26 @@
+{
+  "id": "mouskin",
+  "nom_affichage": "Mouskin",
+  "type": "plante",
+  "pv": 70,
+  "min_level": 1,
+  "max_level": 100,
+  "attaques": [
+    "fouet_liane",
+    "pollen_soin",
+    "charge_verte"
+  ],
+  "sprite":{
+    "id": 0,
+    "idle":{
+      "u": 176,
+      "v": 0
+    },
+    "attack":{
+      "u": 176,
+      "v": 32
+    },
+    "w": 31,
+    "h": 31
+  }
+}

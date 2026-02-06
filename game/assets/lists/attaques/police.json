@@ -1,0 +1,6 @@
+{
+    "id": "police",
+    "nom": "Police",
+    "valeur": 35,
+    "type_action": "degats"
+}

@@ -1,6 +1,6 @@
 {
-  "id": "etincelle",
-  "name": "Etincelle",
-  "type": "degats",
-  "damage": 20
+    "id": "etincelle",
+    "nom": "etincelle",
+    "valeur": 20,
+    "type_action": "degats"
 }

@@ -1,0 +1,26 @@
+{
+  "id": "aquapti",
+  "nom_affichage": "Aquapti",
+  "type": "eau",
+  "pv": 65,
+  "min_level": 1,
+  "max_level": 100,
+  "attaques": [
+    "jet_deau",
+    "vague_rapide",
+    "bulle_percutante"
+  ],
+  "sprite":{
+    "id": 0,
+    "idle":{
+      "u": 208,
+      "v": 0
+    },
+    "attack":{
+      "u": 208,
+      "v": 32
+    },
+    "w": 31,
+    "h": 31
+  }
+}

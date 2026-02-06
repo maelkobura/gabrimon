@@ -1,0 +1,26 @@
+{
+  "id": "rocling",
+  "nom_affichage": "Rocling",
+  "type": "roche",
+  "pv": 90,
+  "min_level": 1,
+  "max_level": 100,
+  "attaques": [
+    "jet_de_pierre",
+    "ecrasement",
+    "mur_mineral"
+  ],
+  "sprite":{
+    "id": 0,
+    "idle":{
+      "u": 208,
+      "v": 64
+    },
+    "attack":{
+      "u": 208,
+      "v": 96
+    },
+    "w": 31,
+    "h": 31
+  }
+}

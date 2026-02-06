@@ -17,4 +17,5 @@ class MapService(Service):
 
     @priority(0)
     def draw(self):
+        if self.engine.get_service("combat").is_combat(): return
         pyxel.bltm(0, 0, self.current_world, 0, 0, 3000,3000)

@@ -5,7 +5,6 @@ import pyxel
 from game.gabrimon.Attaque import Attaque
 from game.gabrimon.Combat import Combat
 from game.gabrimon.Gabrimon import Gabrimon
-from game.gabrimon.Joueur import Joueur
 
 
 def update():
@@ -100,7 +99,6 @@ rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral],
 #psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental])
 #drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco])
 liste_gabrimon = [flamigi,aquapti,mouskin,rocling]
-gabriel = Joueur("Gabriel", [rocling,flamigi,aquapti, mouskin])
 #ennemi = flamigi.copie()
 #combat = Combat(gabriel,ennemi)
 #pyxel.run(update, draw)

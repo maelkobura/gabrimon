@@ -414,7 +414,7 @@ class Combat:
         pyxel.rect(barre_x, barre_y, barre_largeur, barre_hauteur, 5)
 
         # Calcul largeur remplie
-        xp_ratio = g.xp / g.xp_max
+        xp_ratio = g.xp / (20 * g.niveau)
         largeur_xp = int(barre_largeur * xp_ratio)
 
         # Barre remplie

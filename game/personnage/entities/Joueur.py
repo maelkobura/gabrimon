@@ -3,13 +3,11 @@ import random
 import pyxel
 
 from game.gabrimon.Combat import Combat
-from game.gabrimon.Joueur import Joueur
 from game.personnage.composants.GestionGabrimonComponent import GestionGabrimonComponent
 from game.personnage.composants.MouvementComponent import MouvementComponent
 from game.personnage.composants.TeleportationComponent import TeleportationComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
-from game.gabrimon.liste_gabrimon import liste_gabrimon, gabriel, rocling, flamigi, aquapti, mouskin
 
 CLICK_DEBUG = True
 
@@ -21,7 +19,6 @@ class Joueur(Personnage):
         self.register_component("transition", TransitionAnimationComponent)
         self.register_component("teleportation", TeleportationComponent)
         self.register_component("gabrimon", GestionGabrimonComponent)
-        self.get_component("gabrimon").equipe = [rocling,flamigi,aquapti, mouskin]
         self.get_component("gabrimon").gabrimon_actuel = self.get_component("gabrimon").equipe[0]
 
         self.nom = "Raphanathanael"
@@ -53,8 +50,7 @@ class Joueur(Personnage):
 
         if pyxel.btnp(pyxel.KEY_U):
             print("LANCEMENT D'UN COMBAT")
-            ennemi= random.choice(liste_gabrimon).copie()
-            self.service.engine.get_service("combat").start_combat(self, ennemi)
+            self.service.engine.get_service("combat").start_combat(self, self.service.engine.get_service("gabrimon").get_random_gabrimon())
 
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x

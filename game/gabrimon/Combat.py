@@ -433,7 +433,7 @@ class Combat:
 
         # texte s’il existe
         if self.texte_combat != "":
-            lignes = self.decouper_texte(self.texte_combat, max_car=14)[:4]
+            lignes = self.decouper_texte(self.texte_combat, max_car=30)[:4]
             for i, ligne in enumerate(lignes):
                 pyxel.text(x + 4, y + 6 + i * 8, ligne, 7)
 

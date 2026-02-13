@@ -1,13 +1,13 @@
-import pyxel
+"""
 
 class SacADos:
     def __init__(self, x, y, width, height, max_pages):
-        """
+
         Initialise le sac à dos.
         x, y: Position du coin en haut a gauche du sac
         width, height: Taille du rectangle
         max_pages: Nombre total de pages du sac
-        """
+
         self.x = x
         self.y = y
         self.width = width
@@ -17,12 +17,12 @@ class SacADos:
         self.page_actuelle = 1
         self.max_pages = max_pages
 
-        self.col_fond = 9
+        self.col_fond = 10
         self.col_bordure = 7
         self.col_texte = 0
 
     def update(self):
-        """Gère les touche du clavier pour le sac à dos."""
+        Gère les touche du clavier pour le sac à dos.
 
         # Ouvrir / Fermer avec la touche B
         if pyxel.btnp(pyxel.KEY_B):
@@ -40,7 +40,7 @@ class SacADos:
                     self.page_actuelle -= 1
 
     def draw(self):
-        """Affiche le sac à dos s'il est ouvert."""
+        Affiche le sac à dos s'il est ouvert.
         if self.est_ouvert:
             pyxel.rect(self.x, self.y, self.width, self.height, self.col_fond)
             pyxel.rectb(self.x, self.y, self.width, self.height, self.col_bordure)
@@ -75,3 +75,4 @@ class App:
 
 
 App()
+"""

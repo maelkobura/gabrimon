@@ -8,7 +8,7 @@ from game.personnage.composants.MouvementComponent import MouvementComponent
 from game.personnage.composants.TeleportationComponent import TeleportationComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
-
+from game.Inventory.SacADos import SacADos
 CLICK_DEBUG = True
 
 class Joueur(Personnage):

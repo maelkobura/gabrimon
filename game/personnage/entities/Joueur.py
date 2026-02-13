@@ -34,10 +34,15 @@ class Joueur(Personnage):
         if CLICK_DEBUG:
             pyxel.mouse(True)
 
+        self.combat_cooldown = 0
+
 
     def update(self):
         if self.service.engine.get_service("combat").is_combat(): return
         super().update()
+        if self.combat_cooldown > 0:
+            self.combat_cooldown -= 1
+            print(f"COOLDOWN : {self.combat_cooldown}")
         dx, dy = 0, 0
         if pyxel.btn(pyxel.KEY_LEFT):
             dx = -self.speed
@@ -50,7 +55,7 @@ class Joueur(Personnage):
 
         if pyxel.btnp(pyxel.KEY_U):
             print("LANCEMENT D'UN COMBAT")
-            self.service.engine.get_service("combat").start_combat(self, self.service.engine.get_service("gabrimon").get_random_gabrimon())
+
 
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):
             x = pyxel.mouse_x
@@ -64,6 +69,11 @@ class Joueur(Personnage):
         self.get_component("mouvement").move(dx, dy)
         self.set_state("player_x", self.x)
         self.set_state("player_y", self.y)
+
+        if self.service.engine.get_service("terrain").is_in_gabrimon_zone(self.x, self.y) and not self.freeze_interact and dx+dy != 0 and self.combat_cooldown == 0:
+            if random.randint(0,100) == 55:
+                self.service.engine.get_service("combat").start_combat(self, self.service.engine.get_service("gabrimon").get_random_gabrimon())
+                self.combat_cooldown = 1000
 
         if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact and self.doorstep != 0:
             indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)

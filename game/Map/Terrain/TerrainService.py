@@ -7,6 +7,10 @@ class TerrainService(Service):
     def init(self):
         # Walls et speed par tilemap
 
+        self.gabrimon_zone = 0.6
+
+
+
         walls_1 = [
             (1, 0),
             (0, 1),
@@ -18,7 +22,6 @@ class TerrainService(Service):
             (1, 2),
             (2, 2),
             (6, 0),
-
         ]
 
         speed_1 = {
@@ -92,3 +95,6 @@ class TerrainService(Service):
         tx, ty = x // 8, y // 8
         tile = pyxel.tilemap(tilemap_id).pget(tx, ty)
         return speed_dict.get(tile, 1.0)
+
+    def is_in_gabrimon_zone(self, x, y, tilemap_id=None):
+        return self.get_speed(x, y) == self.gabrimon_zone

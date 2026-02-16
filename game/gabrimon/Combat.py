@@ -448,7 +448,7 @@ class Combat:
         # Menu attaques
         if self.etat == "attaque":
             pyxel.text(5, 10, "Choisis une attaque :", 7)
-            for i, a in enumerate(self.joueur.gabrimon_actuel.attaques):
+            for i, a in enumerate(self.joueur.get_component("gabrimon").gabrimon_actuel.attaques):
                 couleur = 10 if i == self.attaque_selectionnee else 7
                 pyxel.text(20, 20 + i*10, a.nom, couleur)
 

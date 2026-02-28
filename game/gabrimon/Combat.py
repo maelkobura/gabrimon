@@ -1,6 +1,6 @@
 import pyxel
 
-from engine.Engine import INSTANCE
+
 
 
 def dessiner_barre_pv(x, y, largeur, hauteur, pv, pv_max):

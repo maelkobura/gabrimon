@@ -57,6 +57,12 @@ class UIService(Service):
             for j in range(y + b, y + h - b, b):
                 pyxel.blt(i, j, img, sx + b, sy + b, b, b)
 
+    def absx(self, x):
+        return int((self.engine.get_state("player_x") - pyxel.width // 2)) + x
+
+    def absy(self, y):
+        return int((self.engine.get_state("player_y") - pyxel.height // 2)) + y
+
     def _draw_text(self, text, x, y, color=7):
         # Position relative à la caméra
         x = int((self.engine.get_state("player_x") - pyxel.width // 2)) + x

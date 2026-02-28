@@ -6,6 +6,7 @@ from game.gabrimon.Combat import Combat
 from game.personnage.composants.GestionGabrimonComponent import GestionGabrimonComponent
 from game.personnage.composants.MouvementComponent import MouvementComponent
 from game.personnage.composants.TeleportationComponent import TeleportationComponent
+from game.personnage.composants.GabridexComponent import GabridexComponent
 from game.personnage.entities.Personnage import Personnage
 from game.personnage.composants.TransitionAnimationComponent import TransitionAnimationComponent
 #from game.Inventory.SacADos import SacADos
@@ -19,6 +20,7 @@ class Joueur(Personnage):
         self.register_component("transition", TransitionAnimationComponent)
         self.register_component("teleportation", TeleportationComponent)
         self.register_component("gabrimon", GestionGabrimonComponent)
+        self.register_component("gabridex", GabridexComponent)
         self.get_component("gabrimon").gabrimon_actuel = self.get_component("gabrimon").equipe[0]
 
         self.nom = "Raphanathanael"
@@ -38,23 +40,26 @@ class Joueur(Personnage):
 
 
     def update(self):
-        if self.service.engine.get_service("combat").is_combat(): return
         super().update()
+
+        if self.service.engine.get_service("combat").is_combat(): return
+
         if self.combat_cooldown > 0:
             self.combat_cooldown -= 1
             print(f"COOLDOWN : {self.combat_cooldown}")
         dx, dy = 0, 0
-        if pyxel.btn(pyxel.KEY_LEFT):
-            dx = -self.speed
-        elif pyxel.btn(pyxel.KEY_RIGHT):
-            dx = self.speed
-        elif pyxel.btn(pyxel.KEY_UP):
-            dy = -self.speed
-        elif pyxel.btn(pyxel.KEY_DOWN):
-            dy = self.speed
+        if not self.freeze_movement:
+            if pyxel.btn(pyxel.KEY_LEFT):
+                dx = -self.speed
+            elif pyxel.btn(pyxel.KEY_RIGHT):
+                dx = self.speed
+            elif pyxel.btn(pyxel.KEY_UP):
+                dy = -self.speed
+            elif pyxel.btn(pyxel.KEY_DOWN):
+                dy = self.speed
 
-        if pyxel.btnp(pyxel.KEY_U):
-            print("LANCEMENT D'UN COMBAT")
+        if pyxel.btnp(pyxel.KEY_P):
+            self.get_component("gabridex").switch()
 
 
         if CLICK_DEBUG and pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT):

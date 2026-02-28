@@ -27,8 +27,8 @@ class Personnage(Entity):
         self.is_moving = False
 
     def update(self):
+        super().update()
         self.frame_counter += 1
-
 
         if self.direction == 1:
             self.sprite_index = 4

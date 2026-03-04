@@ -66,6 +66,7 @@ class Combat:
         self.timer_animation_ennemi = 0
         self.sprite_joueur = "normal"
         self.timer_sprite = 0
+        self.lieux = "normal"
 
         # Son attaque
         pyxel.sound(0).set(
@@ -369,6 +370,10 @@ class Combat:
     def draw(self):
         pyxel.cls(5)
         pyxel.camera(0,0)
+        if self.lieux =="normal":
+            pyxel.bltm(0, 0, 2, 0, 1150, 128, 128)
+        elif self.lieux =="grotte":
+            pyxel.bltm(0, 0, 2, 128, 1150, 128, 128)
         #pyxel.load("../assets/arriere_plan_combat.png")
         #pyxel.images[1].load(0,0, self.engine.get_absolute_path("/assets/arriere_plan_combat.png"))
         #pyxel.images[1].blt(0,0,1,0,0,self.engine.screen_size[0],self.engine.screen_size[1])

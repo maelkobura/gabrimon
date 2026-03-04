@@ -88,14 +88,12 @@ flamigi = creer_gabrimon("Flamigi", 60,[etincelle,griffes_chaudes,souffle_brulan
 aquapti = creer_gabrimon("Aquapti",65, [jet_deau,vague_rapide,bulle_percutante],"Eau", 208, 0,208 , 32)
 mouskin = creer_gabrimon("Mouskin", 70,[fouet_liane,pollen_soin,charge_verte],"Plante", 176 , 0, 176 , 32)
 rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral],"Roche",208, 64,208 , 96)
-
-
+psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental], " psy",192, 128,224,128)
+aerion = Gabrimon("Aerion", 60, [tornade, coup_daile, rafale],192,160, 224,160)
+givrin = Gabrimon("Givrin", 65, [souffle_brulant, pic_de_glace, gel_total ],192,192,144,192)
+noctyra = Gabrimon("Noctyra" , 60, [regard_noir, ombre_vive, morsure_nuit],"ténèbre", 112,8,112, 40)
 
 #voltchu = Gabrimon("Voltchu", 55 , [etincoup, eclair, vitesse_foudre])
-#noctyra = Gabrimon("Noctyra" , 60, [regard_noir, ombre_vive, morsure_nuit])
-#givrin = Gabrimon("Givrin", 65, [souffle_brulant, pic_de_glace, gel_total ])
-#aerion = Gabrimon("Aerion", 60, [tornade, coup_daile, rafale])
-#psymio = Gabrimon("Psymio", 70 , [choc_mental, onde_psy, soin_mental])
 #drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco])
 
-liste_gabrimon = [flamigi,aquapti,mouskin,rocling]
+liste_gabrimon = [flamigi,aquapti,mouskin,rocling,psymio, aerion, givrin, noctyra]

@@ -66,7 +66,7 @@ class Combat:
         self.timer_animation_ennemi = 0
         self.sprite_joueur = "normal"
         self.timer_sprite = 0
-        self.lieux = "normal"
+        self.lieux = "grotte"
 
         # Son attaque
         pyxel.sound(0).set(
@@ -368,12 +368,15 @@ class Combat:
 
 
     def draw(self):
+
         pyxel.cls(5)
         pyxel.camera(0,0)
         if self.lieux =="normal":
-            pyxel.bltm(0, 0, 2, 0, 1150, 128, 128)
+            pyxel.bltm(0, 0, 2, 0, 1150, 180, 180)
+            couleur_text = 14
         elif self.lieux =="grotte":
-            pyxel.bltm(0, 0, 2, 128, 1150, 128, 128)
+            pyxel.bltm(0, 0, 2, 0, 1280, 180, 180)
+            couleur_text = 7
         #pyxel.load("../assets/arriere_plan_combat.png")
         #pyxel.images[1].load(0,0, self.engine.get_absolute_path("/assets/arriere_plan_combat.png"))
         #pyxel.images[1].blt(0,0,1,0,0,self.engine.screen_size[0],self.engine.screen_size[1])
@@ -381,7 +384,7 @@ class Combat:
         #Affichage pv en forme de barre
             # Gabrimon du joueur
 
-        pyxel.text(90, 70, self.joueur.nom, 7)
+        pyxel.text(90, 70, self.joueur.nom,couleur_text)
 
         dessiner_barre_pv(
             x=90,
@@ -393,7 +396,7 @@ class Combat:
         )
 
         # Gabrimon ennemi
-        pyxel.text(90, 5, self.ennemi.nom, 7)
+        pyxel.text(90, 5, self.ennemi.nom, couleur_text)
         pyxel.rect(90, 15, 60, 6, 5)
         dessiner_barre_pv(
             x=90,
@@ -444,24 +447,24 @@ class Combat:
 
         # Menu Gabrimon
         if self.etat == "choix_gabrimon":
-            pyxel.text(5, 10, "Choisis ton Gabrimon :", 7)
+            pyxel.text(5, 10, "Choisis ton Gabrimon :", couleur_text)
             for i, g in enumerate(self.joueur.get_component("gabrimon").equipe):
-                couleur = 10 if i == self.selection_gabrimon else 7
+                couleur = 10 if i == self.selection_gabrimon else couleur_text
                 status = "(KO)" if g.est_ko() else ""
                 pyxel.text(20, 20 + i*10, f"{g.nom} {status}", couleur)
 
         # Menu attaques
         if self.etat == "attaque":
-            pyxel.text(5, 10, "Choisis une attaque :", 7)
+            pyxel.text(5, 10, "Choisis une attaque :", couleur_text)
             for i, a in enumerate(self.joueur.get_component("gabrimon").gabrimon_actuel.attaques):
-                couleur = 10 if i == self.attaque_selectionnee else 7
+                couleur = 10 if i == self.attaque_selectionnee else couleur_text
                 pyxel.text(20, 20 + i*10, a.nom, couleur)
 
         if self.etat == "choix_action":
             options = ["Attaques", "Gabrimon", "sacs", "Fuite"]
-            pyxel.text(5, 15, "Que faire ?", 7)
+            pyxel.text(5, 15, "Que faire ?", couleur_text)
             for i, opt in enumerate(options):
-                couleur = 10 if i == self.selection_action else 7
+                couleur = 10 if i == self.selection_action else couleur_text
                 pyxel.text(20, 25 + i * 10, opt, couleur)
 
             #Gabriball
@@ -506,7 +509,7 @@ class Combat:
             colkey_ennemi = 13
 
         TAILLE_SPRITE = 31
-        X_ENNEMI = 100
+        X_ENNEMI = 102
         Y_ENNEMI = 25
 
         # ===== AFFICHAGE GABRIMON ENNEMI =====
@@ -545,14 +548,13 @@ class Combat:
             )
 
         if self.sprite_joueur == "attaque":
-            x = 42
             u, v = g.sprite_u_attaque , g.sprite_v_attaque
         else:
             x= 35
             u , v = g.sprite_u_normal , g.sprite_v_normal
 
         pyxel.blt(
-            x, 60,
+            45, 50,
             0,
             u, v,
             g.sprite_w,

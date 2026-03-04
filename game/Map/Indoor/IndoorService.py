@@ -30,6 +30,7 @@ class IndoorService(Service):
         self.indoors[18] = IndoorData(self, 19, "Centre Pokemon", Position(441, 375, 1, 1),Position(1050, 1002.5, 3, 0), ((1047.5, 999.5), (15, 17)), ((432, 384), (32, 24)))
         self.indoors[19] = IndoorData(self, 20, "Centre Pokemon", Position(441, 123, 1, 1), Position(667, 914, 3, 0),((664, 911), (15, 17)), ((432, 128), (32, 24)))
         self.indoors[20] = IndoorData(self, 21, "Grotte", Position(100, 31, 1 , 2), Position(565, 1190, 1, 0),((562,1187),(25,15)),((97,30),(22,15)))
+        self.indoors[21] = IndoorData(self, 22, "Grotte", Position(400, 575, 1, 2), Position(1141.5, 1204, 1, 0),((1138.5, 1201), (25, 15)), ((396, 576), (22, 15)))
         
     def get_indoor(self, id):
         for indoor in self.indoors.values():

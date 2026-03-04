@@ -25,8 +25,10 @@ class IndoorService(Service):
 
 
 
-        self.indoors[18] = IndoorData(self, 19, "Centre Pokemon", Position(441, 375, 1, 1), Position(1050, 1002.5, 3, 0),((1047.5, 999.5), (15, 17)), ((432, 384), (32, 24)))
-        self.indoors[19] = IndoorData(self, 20, "Centre Pokemon", Position(441,123, 1, 1), Position(667,914, 3, 0), ((664,911),(15,17)), ((432,128),(32,24)))
+        self.indoors[16] = IndoorData(self, 17, "Boutique Pokemon", Position(1594,105 , 1, 1), Position(987, 1099, 3, 0),((984, 1096), (15, 17)), ((1585, 113), (32, 16)))
+        self.indoors[17] = IndoorData(self, 18, "Boutique Pokemon", Position(1594,361, 1, 1), Position(643,826.5, 3, 0), ((640,823.5),(15,17)), ((1585,369),(32,16)))
+        self.indoors[18] = IndoorData(self, 19, "Centre Pokemon", Position(441, 375, 1, 1),Position(1050, 1002.5, 3, 0), ((1047.5, 999.5), (15, 17)), ((432, 384), (32, 24)))
+        self.indoors[19] = IndoorData(self, 20, "Centre Pokemon", Position(441, 123, 1, 1), Position(667, 914, 3, 0),((664, 911), (15, 17)), ((432, 128), (32, 24)))
         self.indoors[20] = IndoorData(self, 21, "Grotte", Position(100, 31, 1 , 2), Position(565, 1190, 1, 0),((562,1187),(25,15)),((97,30),(22,15)))
         
     def get_indoor(self, id):

@@ -99,6 +99,3 @@ rocling = creer_gabrimon("Rocling", 90,[jet_de_pierre, ecrasement, mur_mineral],
 #drakid = Gabrimon("Drakid", 85 , [griffe_dragon, rugissement, flamme_draco])
 
 liste_gabrimon = [flamigi,aquapti,mouskin,rocling]
-#ennemi = flamigi.copie()
-#combat = Combat(gabriel,ennemi)
-#pyxel.run(update, draw)

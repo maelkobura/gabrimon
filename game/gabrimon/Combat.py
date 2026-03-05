@@ -66,7 +66,7 @@ class Combat:
         self.timer_animation_ennemi = 0
         self.sprite_joueur = "normal"
         self.timer_sprite = 0
-        self.lieux = "grotte"
+        self.lieux = "normal"
 
         # Son attaque
         pyxel.sound(0).set(
@@ -447,20 +447,33 @@ class Combat:
 
         # Menu Gabrimon
         if self.etat == "choix_gabrimon":
-            pyxel.text(5, 10, "Choisis ton Gabrimon :", couleur_text)
+            pyxel.rect(1, 11, 86, 45, 13)
+            pyxel.rectb(1, 11, 86, 45, 0)
+            pyxel.text(3, 12, "Choisis ton Gabrimon:", couleur_text)
             for i, g in enumerate(self.joueur.get_component("gabrimon").equipe):
+                colonne = i % 2
+                ligne = i // 2
+
+                x = 3 + colonne * 35
+                y = 25 + ligne * 10
+
                 couleur = 10 if i == self.selection_gabrimon else couleur_text
                 status = "(KO)" if g.est_ko() else ""
-                pyxel.text(20, 20 + i*10, f"{g.nom} {status}", couleur)
+
+                pyxel.text(x, y, f"{g.nom} {status}", couleur)
 
         # Menu attaques
         if self.etat == "attaque":
-            pyxel.text(5, 10, "Choisis une attaque :", couleur_text)
+            pyxel.rect(3, 12, 86, 45, 13)
+            pyxel.rectb(3, 12, 86, 45, 0)
+            pyxel.text(3, 12, "Choisis une attaque :", couleur_text)
             for i, a in enumerate(self.joueur.get_component("gabrimon").gabrimon_actuel.attaques):
                 couleur = 10 if i == self.attaque_selectionnee else couleur_text
-                pyxel.text(20, 20 + i*10, a.nom, couleur)
+                pyxel.text(4, 20 + i*10, a.nom, couleur)
 
         if self.etat == "choix_action":
+            pyxel.rect(3, 12, 50, 55, 13)
+            pyxel.rectb(3, 12, 50, 55, 0)
             options = ["Attaques", "Gabrimon", "sacs", "Fuite"]
             pyxel.text(5, 15, "Que faire ?", couleur_text)
             for i, opt in enumerate(options):

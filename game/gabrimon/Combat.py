@@ -563,11 +563,13 @@ class Combat:
                 u, v = e.sprite_u_normal, e.sprite_v_normal
 
             pyxel.blt(
-                X_ENNEMI, Y_ENNEMI,
+                X_ENNEMI,
+                Y_ENNEMI,
                 0,
-                u, v,
-                w,
-                h,
+                u,
+                v,
+                31,
+                31,
                 colkey=colkey_ennemi
             )
 

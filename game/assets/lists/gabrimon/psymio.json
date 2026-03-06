@@ -1,0 +1,26 @@
+{
+  "id": "psymio",
+  "nom_affichage": "Psymio",
+  "type": "psy",
+  "pv": 70,
+  "min_level": 1,
+  "max_level": 192,
+  "attaques": [
+    "choc_mental",
+    "onde_psy",
+    "soin_mental"
+  ],
+  "sprite":{
+    "id": 0,
+    "idle":{
+      "u": 112,
+      "v": 8
+    },
+    "attack":{
+      "u": 112,
+      "v": 40
+    },
+    "w": 31,
+    "h": 31
+  }
+}

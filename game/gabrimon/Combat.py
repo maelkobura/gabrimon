@@ -526,7 +526,6 @@ class Combat:
         Y_ENNEMI = 25
 
         # ===== AFFICHAGE GABRIMON ENNEMI =====
-        e = self.ennemi
 
         if self.etat == "capture_animation" and self.capture_phase == 1:
             taille = int(31 * self.capture_scale)
@@ -545,9 +544,21 @@ class Combat:
 
 
         elif self.ennemi_visible:
+            if e.nom == "Givrin":
+                w = 44
+                h = 47
+                X_ENNEMI = 95
+                Y_ENNEMI = 20
+            elif e.nom == "Psymio":
+                X_ENNEMI = 108
+                Y_ENNEMI = 28
+            else :
+                w = 31
+                h = 31
             # normal ou attaque
             if self.sprite_ennemi == "attaque":
                 u, v = e.sprite_u_attaque, e.sprite_v_attaque
+                X_ENNEMI = X_ENNEMI-3
             else:
                 u, v = e.sprite_u_normal, e.sprite_v_normal
 
@@ -555,22 +566,36 @@ class Combat:
                 X_ENNEMI, Y_ENNEMI,
                 0,
                 u, v,
-                -31,
-                31,
+                w,
+                h,
                 colkey=colkey_ennemi
             )
 
+        if g.nom == "Givrin":
+            x = 40
+            y = 45
+        else:
+            x = 45
+            y = 50
+        if g.nom == "Psymio":
+            x = 43
+            y = 55
+        else:
+            x = 45
+            y = 50
+
         if self.sprite_joueur == "attaque":
             u, v = g.sprite_u_attaque , g.sprite_v_attaque
+            x= x+3
         else:
-            x= 35
             u , v = g.sprite_u_normal , g.sprite_v_normal
 
+
         pyxel.blt(
-            45, 50,
+            x, y,
             0,
             u, v,
-            g.sprite_w,
+            -g.sprite_w,
             g.sprite_h,
             colkey=colkey_info
         )

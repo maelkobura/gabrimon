@@ -1,0 +1,26 @@
+{
+  "id": "aerion",
+  "nom_affichage": "Aerion",
+  "type": "vol",
+  "pv": 60,
+  "min_level": 1,
+  "max_level": 100,
+  "attaques": [
+    "tornade",
+    "coup_daile",
+    "rafale"
+  ],
+  "sprite":{
+    "id": 0,
+    "idle":{
+      "u": 192,
+      "v": 160
+    },
+    "attack":{
+      "u": 224,
+      "v": 160
+    },
+    "w": 31,
+    "h": 31
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "noctyra",
+  "nom_affichage": "Noctyra",
+  "type": "tenebre",
+  "pv": 60,
+  "min_level": 1,
+  "max_level": 100,
+  "attaques": [
+    "regard_noir",
+    "ombre_vive",
+    "morsure_nuit"
+  ],
+  "sprite": {
+    "id": 0,
+    "idle": {
+      "u": 112,
+      "v": 8
+    },
+    "attack": {
+      "u": 112,
+      "v": 40
+    },
+    "w": 31,
+    "h": 31
+  }
+}

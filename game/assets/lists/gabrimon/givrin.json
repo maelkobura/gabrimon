@@ -1,0 +1,26 @@
+{
+  "id": "givrin",
+  "nom_affichage": "Givrin",
+  "type": "glace",
+  "pv": 65,
+  "min_level": 1,
+  "max_level": 100,
+  "attaques": [
+    "souffle_brulant",
+    "pic_de_glace",
+    "gel_total"
+  ],
+  "sprite": {
+    "id": 0,
+    "idle": {
+      "u": 192,
+      "v": 192
+    },
+    "attack": {
+      "u": 144,
+      "v": 192
+    },
+    "w": 44,
+    "h": 47
+  }
+}

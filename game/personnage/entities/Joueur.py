@@ -27,6 +27,8 @@ class Joueur(Personnage):
 
         self.x = 1016
         self.y = 396
+        #self.x = 1599
+        #self.y = 971
         self.doorstep = 0
         self.entering = False
 
@@ -81,11 +83,8 @@ class Joueur(Personnage):
                 self.combat_cooldown = 1000
 
         if pyxel.btn(pyxel.KEY_E) and not self.freeze_interact and self.doorstep != 0:
-            indoor = self.service.engine.get_service("indoor").get_indoor(self.doorstep)
-            if self.service.engine.get_service("map").current_world == 0:
-                self.get_component("teleportation").teleport(indoor.indoor_pos)
-            else:
-                self.get_component("teleportation").teleport(indoor.outside_pos)
+            pos = self.service.engine.get_service("indoor").get_pos(self.doorstep)
+            self.get_component("teleportation").teleport(pos)
             self.doorstep=0
 
 

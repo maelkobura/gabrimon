@@ -101,6 +101,7 @@ class Joueur(Personnage):
         if self.service.engine.get_service("combat").is_combat(): return
         pyxel.camera(self.x - pyxel.width // 2, self.y - pyxel.height // 2)
         if self.doorstep != 0 and self.service.engine.get_service("map").current_world == 0:
-            self.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=64, h=16)
-            self.service.engine.get_service("ui").draw_text(self.service.engine.get_service("indoor").get_indoor(self.doorstep).name, 15, 105, 0)
+            indoorname=self.service.engine.get_service("indoor").get_indoor(self.doorstep).name
+            self.service.engine.get_service("ui").draw_container(img=2, sx=232, sy=232, x=10, y=100, w=4*len(indoorname)+10, h=16)
+            self.service.engine.get_service("ui").draw_text(indoorname, 15, 105, 0)
         super().draw()

@@ -19,9 +19,9 @@ class IndoorService(Service):
         self.indoors[9] = IndoorData(self, 10, "Maison", Position(1345, 127, 1, 1), Position(1546, 480.5, 3, 0),((1544, 479.5), (15, 17)), ((1336, 126), (32, 24)))
         self.indoors[10] = IndoorData(self, 11, "Arene", Position(187, 748, 1, 1), Position(1594, 952, 3, 0),((1592, 951), (15, 17)), ((177, 753), (32, 24)))
         self.indoors[11] = IndoorData(self, 12, "???", Position(403, 594, 3, 1), Position(131, 594, 3, 1),((128, 592), (16, 16)),((400, 592), (16, 16)))
-        #self.indoors[12] = IndoorData(self, 13, "???", Position(187, 748, 3, 1), Position(162, 545, 3, 1),((160, 544), (16, 16),1), ((432, 544), (16, 16),1))
-        #self.indoors[13] = IndoorData(self, 14, "???", Position(187, 748, 3, 1), Position(258, 513, 3, 1),((256, 512), (16, 16),1), ((528, 512), (16, 16),1))
-        #self.indoors[14] = IndoorData(self, 15, ")???", Position(187, 748, 3, 1), Position(226, 625, 3, 1),((224, 624), (16, 16),1), ((496, 624), (16, 16),1))
+        self.indoors[12] = IndoorData(self, 13, "???", Position(497, 625, 3, 1), Position(225, 625, 3, 1),((224, 624), (16, 16),1), ((496, 624), (16, 16),1))
+        self.indoors[13] = IndoorData(self, 14, "???", Position(528, 515, 3, 1), Position(256, 513, 3, 1),((256, 512), (16, 16),1), ((528, 512), (16, 16),1))
+        self.indoors[14] = IndoorData(self, 15, "???", Position(434, 545, 3, 1), Position(162, 545, 3, 1),((160, 544), (16, 16),1), ((432, 544), (16, 16),1))
 
 
 

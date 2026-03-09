@@ -12,8 +12,8 @@ class CombatService(Service):
     def is_combat(self):
         return not self.combat is None
 
-    def start_combat(self, player, ennemi):
-        self.combat = Combat(self.engine, player, ennemi)
+    def start_combat(self, player, ennemi, dresseur=None):
+        self.combat = Combat(self.engine, player, ennemi, dresseur=dresseur)
 
     def stop_combat(self):
         self.combat = None

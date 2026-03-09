@@ -28,10 +28,11 @@ def dessiner_barre_pv(x, y, largeur, hauteur, pv, pv_max):
 
 
 class Combat:
-    def __init__(self, engine, joueur, ennemi):
+    def __init__(self, engine, joueur, ennemi, dresseur=None):
         self.joueur = joueur
         self.engine = engine
         self.ennemi = ennemi
+        self.dresseur = dresseur
 
         #gabrimon actif
         self.joueur.gabrimon_actuel = self.joueur.get_component("gabrimon").equipe[0]
@@ -112,6 +113,18 @@ class Combat:
     def reset_capture_animation(self):
         self.capture_phase = 0
         self.capture_scale = 1.0
+
+    def _trainer_has_next(self):
+        return self.dresseur is not None and self.dresseur.has_alive_gabrimon()
+
+    def _send_next_ennemi(self):
+        self.ennemi = self.dresseur.get_current_gabrimon()
+        self.ennemi_visible = True
+        self.sprite_ennemi = "normal"
+        self.timer_animation_ennemi = 0
+        self.etat = "choix_action"
+        self.tour = "joueur"
+        self.afficher_texte(f"{self.dresseur.nom} envoie {self.ennemi.nom} !", 90)
 
     def update(self):
         # Gestion du sprite d'attaque
@@ -231,6 +244,10 @@ class Combat:
                     if self.ennemi.est_ko():
                         xp_gagnee = 10 * self.ennemi.niveau
                         self.joueur.get_component("gabrimon").gabrimon_actuel.gagner_xp(xp_gagnee)
+                        if self.dresseur is not None:
+                            if self._trainer_has_next():
+                                self._send_next_ennemi()
+                                return
                         self.ennemi_visible = False
                         self.etat = "fin"
                         return
@@ -241,6 +258,10 @@ class Combat:
 
         #Capture
         elif self.etat == "capture":
+            if self.dresseur is not None:
+                self.afficher_texte("Impossible de capturer", 60)
+                self.etat = "choix_action"
+                return
 
             # ❌ impossible si ennemi KO
             if self.ennemi.est_ko():
@@ -384,7 +405,7 @@ class Combat:
         #Affichage pv en forme de barre
             # Gabrimon du joueur
 
-        pyxel.text(90, 70, self.joueur.nom,couleur_text)
+        pyxel.text(90, 70, self.joueur.gabrimon_actuel.nom, couleur_text)
 
         dessiner_barre_pv(
             x=90,

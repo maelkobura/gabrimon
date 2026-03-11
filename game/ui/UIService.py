@@ -72,9 +72,9 @@ class UIService(Service):
 
     @priority(100)
     def draw(self):
-        for img, sx, sy, x, y, w, h, border in self.container_stack:
-            self.container_stack.pop()
+        while self.container_stack:
+            img, sx, sy, x, y, w, h, border = self.container_stack.pop()
             self._draw_container(img, sx, sy, x, y, w, h, border)
-        for text, x, y, color in self.text_stack:
-            self.text_stack.pop()
+        while self.text_stack:
+            text, x, y, color = self.text_stack.pop()
             self._draw_text(text, x, y, color)

@@ -64,6 +64,17 @@ class GabrimonService(Service):
         gab.niveau = random.randint(2,99)
         return gab
 
+    def get_gabrimon(self, gabrimon_id, niveau=5):
+        """
+        Retourne une copie d'un gabrimon par id (ex: 'flamigi').
+        """
+        if gabrimon_id not in self.gabrimons:
+            raise KeyError(f"Gabrimon introuvable: {gabrimon_id}")
+        gab = self.gabrimons[gabrimon_id].copie()
+        if niveau is not None:
+            gab.niveau = niveau
+        return gab
+
 
 
 

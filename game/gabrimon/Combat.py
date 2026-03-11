@@ -573,7 +573,7 @@ class Combat:
                 pyxel.blt(
                     X_ENNEMI + (31 - taille) // 2,
                     Y_ENNEMI + (31 - taille) // 2,
-                    0,
+                    e.sprite_bank,
                     e.sprite_u_normal,
                     e.sprite_v_normal,
                     taille,
@@ -604,7 +604,7 @@ class Combat:
             pyxel.blt(
                 X_ENNEMI,
                 Y_ENNEMI,
-                0,
+                e.sprite_bank,
                 u,
                 v,
                 31,
@@ -634,7 +634,7 @@ class Combat:
 
         pyxel.blt(
             x, y,
-            0,
+            g.sprite_bank,
             u, v,
             -g.sprite_w,
             g.sprite_h,

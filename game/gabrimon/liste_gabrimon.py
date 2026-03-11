@@ -23,6 +23,7 @@ def creer_gabrimon(nom,pv, attaques, type,u_normal, v_normal, u_attaque, v_attaq
         pv_max=pv,
         attaques=attaques,
         type=type,
+        sprite_bank=0,
         sprite_u_normal=u_normal,
         sprite_v_normal=v_normal,
         sprite_u_attaque= u_attaque,

@@ -106,6 +106,8 @@ class Joueur(Personnage):
         self.set_state("player_y", self.y)
 
         if self.service.engine.get_service("terrain").is_in_gabrimon_zone(self.x, self.y) and not self.freeze_interact and dx+dy != 0 and self.combat_cooldown == 0:
+            if self.get_component("gabrimon").tous_ko():
+                return
             if random.randint(0,100) == 55:
                 self.service.engine.get_service("combat").start_combat(self, self.service.engine.get_service("gabrimon").get_random_gabrimon())
                 self.combat_cooldown = 1000

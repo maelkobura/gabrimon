@@ -53,6 +53,14 @@ class Dresseur(Personnage):
         return (tx - half <= px <= tx + half) and (ty - half <= py <= ty + half)
 
     def start_combat(self, player):
+        # Ne pas lancer de combat si le joueur n'a plus de Gabrimon en etat de combattre.
+        try:
+            if player.get_component("gabrimon").tous_ko():
+                if hasattr(player, "show_toast"):
+                    player.show_toast("Equipe KO: va au centre", 120)
+                return
+        except Exception:
+            pass
         enemy = self.get_current_gabrimon()
         if enemy is None:
             self.defeated = True

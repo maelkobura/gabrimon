@@ -217,10 +217,14 @@ class Combat:
 
             attaques = self.joueur.get_component("gabrimon").gabrimon_actuel.attaques
 
+            if pyxel.btnp(pyxel.KEY_LEFT):
+                self.attaque_selectionnee = (self.attaque_selectionnee - 1) % len(attaques)
+            if pyxel.btnp(pyxel.KEY_RIGHT):
+                self.attaque_selectionnee = (self.attaque_selectionnee + 1) % len(attaques)
             if pyxel.btnp(pyxel.KEY_UP):
-                self.attaque_selectionnee = (self.attaque_selectionnee - 1) % len(self.joueur.get_component("gabrimon").gabrimon_actuel.attaques)
+                self.attaque_selectionnee = (self.attaque_selectionnee - 2) % len(attaques)
             if pyxel.btnp(pyxel.KEY_DOWN):
-                self.attaque_selectionnee = (self.attaque_selectionnee + 1) % len(self.joueur.get_component("gabrimon").gabrimon_actuel.attaques)
+                self.attaque_selectionnee = (self.attaque_selectionnee + 2) % len(attaques)
             if pyxel.btnp(pyxel.KEY_BACKSPACE):
                 self.etat = "choix_action"
             if not self.bloque_actions:
@@ -451,32 +455,27 @@ class Combat:
 
 
         # coordonnées et taille de ton cadre
-        x = 0
-        y = 92
-        largeur = 160
-        hauteur = 28
+        menu_x = 0
+        menu_y = 88
+        menu_largeur = 160
+        menu_hauteur = 32
 
         # fond et bordure
-        pyxel.rect(x, y, largeur, hauteur, 13)
-        pyxel.rectb(x, y, largeur, hauteur, 0)
+        pyxel.rect(menu_x, menu_y, menu_largeur, menu_hauteur, 13)
+        pyxel.rectb(menu_x, menu_y, menu_largeur, menu_hauteur, 0)
 
         # texte s’il existe
-        if self.texte_combat != "":
-            lignes = self.decouper_texte(self.texte_combat, max_car=30)[:4]
-            for i, ligne in enumerate(lignes):
-                pyxel.text(x + 4, y + 6 + i * 8, ligne, 7)
+        # (texte de combat dessine plus bas, a la place de l'ancien menu)
 
         # Menu Gabrimon
         if self.etat == "choix_gabrimon":
-            pyxel.rect(1, 11, 86, 45, 13)
-            pyxel.rectb(1, 11, 86, 45, 0)
-            pyxel.text(3, 12, "Choisis ton Gabrimon:", couleur_text)
+            pyxel.text(menu_x + 6, menu_y + 3, "Choisis ton Gabrimon:", couleur_text)
             for i, g in enumerate(self.joueur.get_component("gabrimon").equipe):
                 colonne = i % 2
                 ligne = i // 2
 
-                x = 3 + colonne * 35
-                y = 25 + ligne * 10
+                x = menu_x + 6 + colonne * 78
+                y = menu_y + 12 + ligne * 8
 
                 couleur = 10 if i == self.selection_gabrimon else couleur_text
                 status = "(KO)" if g.est_ko() else ""
@@ -485,21 +484,28 @@ class Combat:
 
         # Menu attaques
         if self.etat == "attaque":
-            pyxel.rect(3, 12, 86, 45, 13)
-            pyxel.rectb(3, 12, 86, 45, 0)
-            pyxel.text(3, 12, "Choisis une attaque :", couleur_text)
+            pyxel.text(menu_x + 6, menu_y + 3, "Choisis une attaque :", couleur_text)
             for i, a in enumerate(self.joueur.get_component("gabrimon").gabrimon_actuel.attaques):
                 couleur = 10 if i == self.attaque_selectionnee else couleur_text
-                pyxel.text(4, 20 + i*10, a.nom, couleur)
+                colonne = i % 2
+                ligne = i // 2
+                x = menu_x + 6 + colonne * 78
+                y = menu_y + 12 + ligne * 8
+                pyxel.text(x, y, a.nom, couleur)
 
         if self.etat == "choix_action":
-            pyxel.rect(3, 12, 50, 55, 13)
-            pyxel.rectb(3, 12, 50, 55, 0)
             options = ["Attaques", "Gabrimon", "sacs", "Fuite"]
-            pyxel.text(5, 15, "Que faire ?", couleur_text)
+            pyxel.text(menu_x + 6, menu_y + 3, "Que faire ?", couleur_text)
+            positions = [
+                (menu_x + 6, menu_y + 13),
+                (menu_x + 86, menu_y + 13),
+                (menu_x + 6, menu_y + 21),
+                (menu_x + 86, menu_y + 21),
+            ]
             for i, opt in enumerate(options):
+                px, py = positions[i]
                 couleur = 10 if i == self.selection_action else couleur_text
-                pyxel.text(20, 25 + i * 10, opt, couleur)
+                pyxel.text(px, py, opt, couleur)
 
             #Gabriball
             # Partie rouge
@@ -509,6 +515,18 @@ class Combat:
             # Bouton central
             pyxel.circ(40, 4 + 1, 1, 0)
             pyxel.text(30, 3, "E", 7)
+
+        # Texte de combat: affiche a la place de l'ancien menu (en haut a gauche)
+        if self.texte_combat != "":
+            x_msg = 3
+            y_msg = 10
+            largeur_msg = 70
+            hauteur_msg = 24
+            pyxel.rect(x_msg, y_msg, largeur_msg, hauteur_msg, 13)
+            pyxel.rectb(x_msg, y_msg, largeur_msg, hauteur_msg, 0)
+            lignes = self.decouper_texte(self.texte_combat, max_car=18)[:2]
+            for i, ligne in enumerate(lignes):
+                pyxel.text(x_msg + 4, y_msg + 6 + i * 8, ligne, 7)
 
 
 

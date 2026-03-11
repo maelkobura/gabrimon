@@ -1,3 +1,5 @@
+import pyxel
+
 
 class SacADos:
     def __init__(self, x, y, width, height, max_pages):

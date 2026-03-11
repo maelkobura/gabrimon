@@ -13,6 +13,17 @@ class CombatService(Service):
         return not self.combat is None
 
     def start_combat(self, player, ennemi, dresseur=None):
+        # Garde-fou: si toute l'equipe est KO, on ne relance pas un combat.
+        try:
+            comp = player.get_component("gabrimon")
+            if comp.tous_ko():
+                if hasattr(player, "show_toast"):
+                    player.show_toast("Equipe KO: va au centre", 120)
+                return
+        except Exception:
+            # Si le joueur n'a pas de composant gabrimon, on laisse le combat se lancer.
+            pass
+
         self.combat = Combat(self.engine, player, ennemi, dresseur=dresseur)
 
     def stop_combat(self):

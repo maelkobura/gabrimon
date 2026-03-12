@@ -48,6 +48,18 @@ class TerrainService(Service):
             (10,5.5),
             (11,5.5),
             (12,5.5),
+            (6, 4.5),
+            (7.5, 5),
+            (8.5, 5),
+            (5, 4.5),
+            (4, 3),
+            (5, 3),
+            (5.5, 3),
+            (4, 2),
+            (5, 2),
+            (5.5, 2),
+            (5, 1),
+            (6, 1),
 
         ]
 
@@ -128,35 +140,33 @@ class TerrainService(Service):
             (1,13),
             (2,12.5),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         ]
+
+
+        walls_3 = [
+            (6, 4.5),
+            (7.5, 5),
+            (8.5, 5),
+            (5, 4.5),
+            (4, 3),
+            (5, 3),
+            (5.5, 3),
+            (4, 2),
+            (5, 2),
+            (5.5, 2),
+            (5, 1),
+            (6, 1),
+        ]
+
+        speed_3 = {
+            (4, 4.5): 0.6
+        }
 
         self.tilemap_walls = {}
         self.tilemap_speed = {}
         self.set_tilemap_data(0, walls_1, speed_1)
         self.set_tilemap_data(1, walls_2, {})
-        self.set_tilemap_data(2, [], {})
+        self.set_tilemap_data(2, walls_3, speed_3)
 
     def set_tilemap_data(self, tilemap_id, walls=None, speed=None):
         walls_set = set()

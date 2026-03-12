@@ -156,6 +156,7 @@ class TerrainService(Service):
         self.tilemap_speed = {}
         self.set_tilemap_data(0, walls_1, speed_1)
         self.set_tilemap_data(1, walls_2, {})
+        self.set_tilemap_data(2, [], {})
 
     def set_tilemap_data(self, tilemap_id, walls=None, speed=None):
         walls_set = set()
@@ -188,8 +189,7 @@ class TerrainService(Service):
         if tilemap_id is None:
             tilemap_id = self.get_state("current_world")
 
-
-        walls = self.tilemap_walls.get(tilemap_id)
+        walls = self.tilemap_walls.get(tilemap_id, set())
         corners = [
             (x, y),
             (x + largeur - 1, y),
